@@ -636,22 +636,52 @@ function formatLeaderboardPlayer(userId) {
 function renderLeaderboardRows(rows) {
   leaderboardTableBody.innerHTML = '';
   if (!rows || rows.length === 0) {
-    leaderboardTableBody.innerHTML = '<tr><td colspan="5">No rankings available yet.</td></tr>';
+    const emptyRow = document.createElement('tr');
+    const emptyCell = document.createElement('td');
+    emptyCell.colSpan = '5';
+    emptyCell.textContent = 'No rankings available yet.';
+    emptyRow.appendChild(emptyCell);
+    leaderboardTableBody.appendChild(emptyRow);
     return;
   }
+  
   rows.forEach((row, index) => {
     const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${index + 1}</td>
-      <td>${formatLeaderboardPlayer(row.user_id)}</td>
-      <td>${row.mode || 'unknown'}</td>
-      <td>${row.score ?? 0}</td>
-      <td>${new Date(row.updated_at).toLocaleString()}</td>
-    `;
+    
+    // Rank
+    const rankCell = document.createElement('td');
+    rankCell.textContent = index + 1;
+    tr.appendChild(rankCell);
+    
+    // Player name
+    const playerCell = document.createElement('td');
+    playerCell.textContent = formatLeaderboardPlayer(row.user_id);
+    tr.appendChild(playerCell);
+    
+    // Mode
+    const modeCell = document.createElement('td');
+    modeCell.textContent = row.mode || 'unknown';
+    tr.appendChild(modeCell);
+    
+    // Score
+    const scoreCell = document.createElement('td');
+    scoreCell.textContent = row.score ?? 0;
+    tr.appendChild(scoreCell);
+    
+    // Date - with error handling
+    const dateCell = document.createElement('td');
+    try {
+      const date = new Date(row.updated_at);
+      dateCell.textContent = date.toLocaleString();
+    } catch (e) {
+      dateCell.textContent = 'Unknown date';
+      console.warn('Date parsing error:', row.updated_at);
+    }
+    tr.appendChild(dateCell);
+    
     leaderboardTableBody.appendChild(tr);
   });
 }
-
 async function loadGlobalLeaderboard() {
   leaderboardMessage.textContent = 'Loading global rankings...';
   leaderboardTableBody.innerHTML = '<tr><td colspan="5">Loading…</td></tr>';
