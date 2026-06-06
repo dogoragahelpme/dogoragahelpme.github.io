@@ -627,65 +627,35 @@ async function updateHighScoreIfNeeded() {
   }
 }
 
-function formatLeaderboardPlayer(userId) {
-  if (!userId) return 'Unknown';
-  if (userId === currentUserId) return 'You';
-  return `${userId.slice(0, 8)}...`;
+function formatLeaderboardPlayer(row) {
+  if (!row || !row.user_id) return 'Unknown';
+  if (row.user_id === currentUserId) return 'You';
+  return row.username && row.leaderboard_public ? row.username : `${row.user_id.slice(0, 8)}...`;
 }
 
 function renderLeaderboardRows(rows) {
   leaderboardTableBody.innerHTML = '';
   if (!rows || rows.length === 0) {
-    const emptyRow = document.createElement('tr');
-    const emptyCell = document.createElement('td');
-    emptyCell.colSpan = '5';
-    emptyCell.textContent = 'No rankings available yet.';
-    emptyRow.appendChild(emptyCell);
-    leaderboardTableBody.appendChild(emptyRow);
+    leaderboardTableBody.innerHTML = '<tr><td colspan="5">No rankings available yet.</td></tr>';
     return;
   }
-  
   rows.forEach((row, index) => {
     const tr = document.createElement('tr');
-    
-    // Rank
-    const rankCell = document.createElement('td');
-    rankCell.textContent = index + 1;
-    tr.appendChild(rankCell);
-    
-    // Player name
-    const playerCell = document.createElement('td');
-    playerCell.textContent = formatLeaderboardPlayer(row.user_id);
-    tr.appendChild(playerCell);
-    
-    // Mode
-    const modeCell = document.createElement('td');
-    modeCell.textContent = row.mode || 'unknown';
-    tr.appendChild(modeCell);
-    
-    // Score
-    const scoreCell = document.createElement('td');
-    scoreCell.textContent = row.score ?? 0;
-    tr.appendChild(scoreCell);
-    
-    // Date - with error handling
-    const dateCell = document.createElement('td');
-    try {
-      const date = new Date(row.updated_at);
-      dateCell.textContent = date.toLocaleString();
-    } catch (e) {
-      dateCell.textContent = 'Unknown date';
-      console.warn('Date parsing error:', row.updated_at);
-    }
-    tr.appendChild(dateCell);
-    
+    tr.innerHTML = `
+      <td>${index + 1}</td>
+      <td>${formatLeaderboardPlayer(row)}</td>
+      <td>${row.mode || 'unknown'}</td>
+      <td>${row.score ?? 0}</td>
+      <td>${new Date(row.updated_at).toLocaleString()}</td>
+    `;
     leaderboardTableBody.appendChild(tr);
   });
 }
+
 async function loadGlobalLeaderboard() {
   leaderboardMessage.textContent = 'Loading global rankings...';
   leaderboardTableBody.innerHTML = '<tr><td colspan="5">Loading…</td></tr>';
-  let query = supabaseClient.from('highscores').select('user_id, mode, score, updated_at').order('score', { ascending: false }).limit(20);
+  let query = supabaseClient.from('highscores').select('user_id, mode, score, updated_at, users(id, raw_user_meta_data)').order('score', { ascending: false }).limit(20);
   if (globalLeaderboardMode !== 'all') {
     query = query.eq('mode', globalLeaderboardMode);
   }
@@ -701,18 +671,25 @@ async function loadGlobalLeaderboard() {
     renderLeaderboardRows([]);
     return;
   }
+  
+  const processedData = data.map((row) => ({
+    ...row,
+    username: row.users?.raw_user_meta_data?.username || null,
+    leaderboard_public: row.users?.raw_user_meta_data?.leaderboard_public || false
+  }));
+  
   leaderboardMessage.textContent = `Top ${data.length} scores ${globalLeaderboardMode === 'all' ? 'across all modes' : `for ${globalLeaderboardMode.toUpperCase()}`}.`;
-  renderLeaderboardRows(data);
+  renderLeaderboardRows(processedData);
 }
 
-function setLeaderboardMode(mode) {
+async function setLeaderboardMode(mode) {
   globalLeaderboardMode = mode;
   leaderboardAllButton.classList.toggle('active', mode === 'all');
   leaderboardNameButton.classList.toggle('active', mode === 'name');
   leaderboardHexButton.classList.toggle('active', mode === 'hex');
   leaderboardRgbButton.classList.toggle('active', mode === 'rgb');
   leaderboardHslButton.classList.toggle('active', mode === 'hsl');
-  loadGlobalLeaderboard();
+  await loadGlobalLeaderboard();
 }
 
 function updateStats() {
