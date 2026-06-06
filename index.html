@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ColorGuessa</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <nav class="top-nav">
+      <div class="logo">ColorGuessa</div>
+      <div class="nav-links">
+        <button class="nav-button" id="startPageButton">Home</button>
+        <button class="nav-button" id="playPageButton">Play</button>
+        <button class="nav-button" id="leaderboardPageButton">Ranking</button>
+        <button class="nav-button" id="infoButton">Info</button>
+      </div>
+      <button class="nav-button theme-toggle" id="themeToggleButton" aria-pressed="false" aria-label="Switch to light theme" title="Switch theme">☀</button>
+      <button class="nav-button" id="authButton">Sign in</button>
+      <button class="nav-button hidden" id="logoutButton">Logout</button>
+      <button class="nav-button hidden" id="accountSettingsButton">Account</button>
+    </nav>
+    <section id="startPage" class="start-page card">
+      <div>
+        <h1>ColorGuessa</h1>
+        <p>Tap into your color intuition. Start with a quick guessing round and switch between Color Name, HEX, RGB, and HSL modes.</p>
+        <div class="start-actions">
+          <button class="control-button" id="startGameButton">Start game</button>
+          <button class="control-button" id="viewHelpButton">How to play</button>
+        </div>
+      </div>
+      <div class="start-preview">
+        <div class="preview-swatch"></div>
+        <div class="preview-info">
+          <p>Score streaks, timer challenges, and theme support make every round exciting.</p>
+        </div>
+      </div>
+    </section>
+    <section id="gamePage" class="hidden">
+    <header>
+      <div>
+        <h1>ColorGuessa</h1>
+        <p>Challenge your color intuition with a fast-paced guessing game. Identify the color shown in the swatch before time runs out.</p>
+      </div>
+      <div class="status-bar">
+        <div class="card stat">
+          <span>Score</span>
+          <strong id="scoreValue">0</strong>
+        </div>
+        <div class="card stat">
+          <span>Time Left</span>
+          <strong id="timerValue">60s</strong>
+        </div>
+        <div class="card stat">
+          <span>Streak</span>
+          <strong id="streakValue">0</strong>
+        </div>
+        <div class="card stat">
+          <span>High Score</span>
+          <strong id="highScoreValue">0</strong>
+        </div>
+      </div>
+    </header>
+
+    <main class="game-panel">
+      <section class="card color-card">
+        <div class="color-swatch" id="colorSwatch"></div>
+        <div class="color-info">
+          <div>
+            <p class="title" id="targetLabel">Enter the current color value</p>
+            <h2 class="target" id="targetName">Type your answer below</h2>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+            <button class="control-button" id="newGameButton">New game</button>
+            <button class="control-button" id="settingsButton" aria-haspopup="dialog">Settings</button>
+            <button class="control-button" id="helpButton" aria-haspopup="dialog">Help</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="card controls">
+        <div class="color-info">
+          <div>
+            <p class="title">Difficulty</p>
+          </div>
+          <div class="difficulty-buttons">
+            <button class="control-button diff-button" id="diffVeryEasyButton">Very Easy</button>
+            <button class="control-button diff-button" id="diffEasyButton">Easy</button>
+            <button class="control-button diff-button active" id="diffMediumButton">Medium</button>
+            <button class="control-button diff-button" id="diffHardButton">Hard</button>
+            <button class="control-button diff-button" id="diffExpertButton">Expert</button>
+          </div>
+        </div>
+        <div class="color-info">
+          <div>
+            <p class="title">Guess mode</p>
+          </div>
+          <div class="mode-buttons">
+            <button class="control-button mode-button active" id="modeNameButton">Name</button>
+            <button class="control-button mode-button" id="modeHexButton">HEX</button>
+            <button class="control-button mode-button" id="modeRgbButton">RGB</button>
+            <button class="control-button mode-button" id="modeHslButton">HSL</button>
+          </div>
+        </div>
+        <div class="answer-input">
+          <input type="text" id="answerInput" placeholder="Type your answer here" autocomplete="off" />
+          <button class="control-button" id="submitAnswerButton">Submit</button>
+        </div>
+        <div class="options hidden">
+          <button class="option-button">Option 1</button>
+          <button class="option-button">Option 2</button>
+          <button class="option-button">Option 3</button>
+          <button class="option-button">Option 4</button>
+        </div>
+        <p class="message" id="messageText">Type the answer that matches the swatch.</p>
+      </section>
+
+      <!-- Settings Modal -->
+      <div id="settingsModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" aria-hidden="true">
+        <div class="modal-content">
+          <h3 id="settingsTitle">Settings</h3>
+          <label for="timerSelect">Timer length (seconds)</label>
+          <select id="timerSelect">
+            <option value="30">30</option>
+            <option value="45">45</option>
+            <option value="60">60</option>
+            <option value="90">90</option>
+          </select>
+          <div style="margin-top:12px">
+            <label><input type="checkbox" id="soundToggle"> Enable sounds</label>
+          </div>
+          <div style="margin-top:14px;display:flex;gap:8px;justify-content:flex-end;">
+            <button class="control-button" id="saveSettingsButton">Save</button>
+            <button class="control-button" id="closeSettingsButton">Close</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Help Modal -->
+      <div id="helpModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="helpTitle" aria-hidden="true">
+        <div class="modal-content">
+          <h3 id="helpTitle">How to play</h3>
+          <p>Easy mode: multiple-choice answers are presented. Hard mode: type the correct value.</p>
+          <p>HEX examples: <code>#FF0000</code> or <code>ff0000</code></p>
+          <p>RGB examples: <code>rgb(255,0,0)</code> or <code>255 0 0</code></p>
+          <p>HSL examples: <code>hsl(0,100%,50%)</code> or <code>0 100 50</code></p>
+          <div style="margin-top:12px;display:flex;justify-content:flex-end;"><button class="control-button" id="closeHelpButton">Close</button></div>
+        </div>
+      </div>
+
+      <section class="footer card">
+        <h2>How to play</h2>
+        <p>Select the color name that matches the displayed swatch. The game lasts 60 seconds, and correct answers build your score and streak. Switch difficulty to make the game easier or harder.</p>
+      </section>
+    </main>
+  </section>
+
+  <section id="infoPage" class="hidden about-page card">
+    <h2>Why ColorGuessa works</h2>
+    <p>ColorGuessa is built to help you learn color values quickly and enjoyably, whether you are a designer, developer, or color enthusiast.</p>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>Multiple formats</h3>
+        <p>Learn and compare color names, HEX, RGB, and HSL values in one fast-paced game.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Easy + hard play</h3>
+        <p>Switch between friendly multiple choice and typed answers for a stronger learning curve.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Focused practice</h3>
+        <p>Use timed rounds to train visual recall and build confidence with color codes.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Smart UX</h3>
+        <p>Dark/light themes, sound controls, and high score tracking keep the game fun and customizable.</p>
+      </div>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>How to play</h3>
+        <p>Choose a mode, then guess the color shown in the swatch by typing the correct value or picking the right answer.</p>
+        <ul>
+          <li>Easy mode: select from four choices.</li>
+          <li>Hard mode: type the exact answer.</li>
+          <li>HEX format: <code>#FF0000</code> or <code>ff0000</code>.</li>
+          <li>RGB format: <code>rgb(255,0,0)</code> or <code>255 0 0</code>.</li>
+          <li>HSL format: <code>hsl(0,100%,50%)</code> or <code>0 100 50</code>.</li>
+        </ul>
+      </div>
+      <div class="feature-card">
+        <h3>Why this game is good for you</h3>
+        <ul>
+          <li>Improves color literacy across common design and development formats.</li>
+          <li>Builds faster color recognition through repeated practice.</li>
+          <li>Strengthens memory with streaks, score tracking, and time pressure.</li>
+          <li>Offers a gentle way to learn color formats while having fun.</li>
+        </ul>
+      </div>
+    </div>
+    <button class="control-button" id="backToHomeButton">Back to home</button>
+  </section>
+  <section id="leaderboardPage" class="hidden about-page card leaderboard-page">
+    <h2>Global Rankings</h2>
+    <p>See the top scores across all players. Select a mode to filter the leaderboard, or view the best scores overall.</p>
+    <div class="leaderboard-controls">
+      <button class="control-button mode-button active" id="leaderboardAllButton">All</button>
+      <button class="control-button mode-button" id="leaderboardNameButton">Name</button>
+      <button class="control-button mode-button" id="leaderboardHexButton">HEX</button>
+      <button class="control-button mode-button" id="leaderboardRgbButton">RGB</button>
+      <button class="control-button mode-button" id="leaderboardHslButton">HSL</button>
+    </div>
+    <div class="leaderboard-status" id="leaderboardMessage">Loading global rankings…</div>
+    <div class="table-wrap">
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Player</th>
+            <th>Mode</th>
+            <th>Score</th>
+            <th>Updated</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardTableBody">
+          <tr><td colspan="5">No data yet.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="control-button" id="backToHomeButtonFromLeaderboard">Back to home</button>
+  </section>
+</div>
+      <!-- Account Settings Modal -->
+      <div id="accountModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="accountTitle" aria-hidden="true">
+        <div class="modal-content">
+          <h3 id="accountTitle">Account Settings</h3>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+            <div id="accountStats" style="background:#fafafa;padding:8px;border-radius:6px;">
+              <strong>Personal stats</strong>
+              <div id="accountStatsContent" style="margin-top:6px;font-size:0.95rem;color:#222;">Loading…</div>
+            </div>
+            <label>Username
+              <input id="accountUsername" type="text" placeholder="Username">
+            </label>
+            <label>Email
+              <input id="accountEmail" type="email" placeholder="Email" readonly>
+            </label>
+            <label><input id="accountLeaderboardPublic" type="checkbox"> Show my username on global leaderboard</label>
+            <label>Theme
+              <select id="accountThemeSelect">
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+              </select>
+            </label>
+            <fieldset style="border-top:1px solid #eee;padding-top:8px;margin-top:6px;">
+              <legend>Change password</legend>
+              <input id="accountCurrentPassword" type="password" placeholder="Current password">
+              <input id="accountNewPassword" type="password" placeholder="New password">
+              <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:6px;">
+                <button class="control-button" id="accountChangePasswordButton">Change password</button>
+              </div>
+            </fieldset>
+            <div style="margin-top:8px;display:flex;gap:8px;justify-content:space-between;align-items:center;">
+              <button class="control-button danger" id="deleteAccountButton">Delete account</button>
+              <div style="display:flex;gap:8px;">
+                <button class="control-button" id="saveAccountButton">Save</button>
+                <button class="control-button" id="closeAccountButton">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Auth Modal -->
+      <div id="authModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="authTitle" aria-hidden="true">
+        <div class="modal-content">
+          <h3 id="authTitle">Sign in</h3>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+            <div id="authUsernameRow" class="hidden">
+              <input id="authUsername" type="text" placeholder="Username" autocomplete="username">
+            </div>
+            <input id="authEmail" type="email" placeholder="Email" autocomplete="username">
+            <input id="authPassword" type="password" placeholder="Password" autocomplete="current-password">
+          </div>
+          <p style="margin-top:8px;"><a href="#" id="authToggleLink">Create an account</a></p>
+          <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end;">
+            <button class="control-button" id="authSubmitButton">Sign in</button>
+            <button class="control-button" id="closeAuthButton">Close</button>
+          </div>
+        </div>
+      </div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+</body>
+</html>
