@@ -655,7 +655,7 @@ function renderLeaderboardRows(rows) {
 async function loadGlobalLeaderboard() {
   leaderboardMessage.textContent = 'Loading global rankings...';
   leaderboardTableBody.innerHTML = '<tr><td colspan="5">Loading…</td></tr>';
-  let query = supabaseClient.from('highscores').select('user_id, mode, score, updated_at, users(id, raw_user_meta_data)').order('score', { ascending: false }).limit(20);
+  let query = supabaseClient.from('highscores').select('user_id, mode, score, updated_at').order('score', { ascending: false }).limit(20);
   if (globalLeaderboardMode !== 'all') {
     query = query.eq('mode', globalLeaderboardMode);
   }
@@ -672,10 +672,27 @@ async function loadGlobalLeaderboard() {
     return;
   }
   
+  const userIds = [...new Set(data.map(row => row.user_id))];
+  let userProfiles = {};
+  
+  if (userIds.length > 0) {
+    // Try to fetch from profiles table
+    const { data: profiles } = await supabaseClient
+      .from('profiles')
+      .select('id, username, leaderboard_public')
+      .in('id', userIds);
+    
+    if (profiles) {
+      profiles.forEach(profile => {
+        userProfiles[profile.id] = profile;
+      });
+    }
+  }
+  
   const processedData = data.map((row) => ({
     ...row,
-    username: row.users?.raw_user_meta_data?.username || null,
-    leaderboard_public: row.users?.raw_user_meta_data?.leaderboard_public || false
+    username: userProfiles[row.user_id]?.username || null,
+    leaderboard_public: userProfiles[row.user_id]?.leaderboard_public || false
   }));
   
   leaderboardMessage.textContent = `Top ${data.length} scores ${globalLeaderboardMode === 'all' ? 'across all modes' : `for ${globalLeaderboardMode.toUpperCase()}`}.`;
