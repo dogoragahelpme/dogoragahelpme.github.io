@@ -55,11 +55,19 @@ const themeToggleButton = document.getElementById("themeToggleButton");
 const authButton = document.getElementById("authButton");
 const logoutButton = document.getElementById("logoutButton");
 const authModal = document.getElementById("authModal");
+const authForm = document.getElementById("authForm");
 const authEmail = document.getElementById("authEmail");
 const authPassword = document.getElementById("authPassword");
 const authUsername = document.getElementById("authUsername");
 const authUsernameRow = document.getElementById("authUsernameRow");
+const authConfirmPassword = document.getElementById("authConfirmPassword");
+const authConfirmPasswordRow = document.getElementById("authConfirmPasswordRow");
 const authTitle = document.getElementById("authTitle");
+const authHelpText = document.getElementById("authHelpText");
+const authTogglePasswordButton = document.getElementById("authTogglePasswordButton");
+const authLoginTab = document.getElementById("loginTab");
+const authSignupTab = document.getElementById("signupTab");
+const authMessage = document.getElementById("authMessage");
 const authToggleLink = document.getElementById("authToggleLink");
 const authSubmitButton = document.getElementById("authSubmitButton");
 const closeAuthButton = document.getElementById("closeAuthButton");
@@ -153,12 +161,20 @@ function updateAuthUI() {
   }
 }
 
-async function handleAuthSubmit() {
+async function handleAuthSubmit(event) {
+  if (event && typeof event.preventDefault === 'function') event.preventDefault();
   const email = (authEmail.value || '').trim();
   const pass = authPassword.value || '';
   const username = (authUsername.value || '').trim();
-  if (!email || !pass) { setMessage('Enter email and password.'); return; }
-  if (authMode === 'signup' && !username) { setMessage('Enter a username to create an account.'); return; }
+  const confirmPass = authConfirmPassword ? authConfirmPassword.value || '' : '';
+
+  clearAuthMessage();
+  if (!email || !pass) { setAuthMessage('Enter email and password.', 'danger'); return; }
+  if (authMode === 'signup') {
+    if (!username) { setAuthMessage('Choose a username for your account.', 'danger'); return; }
+    if (pass.length < 8) { setAuthMessage('Password must be at least 8 characters.', 'danger'); return; }
+    if (pass !== confirmPass) { setAuthMessage('Passwords do not match.', 'danger'); return; }
+  }
 
   try {
     let result;
@@ -171,8 +187,9 @@ async function handleAuthSubmit() {
         }
       });
       if (result.error) throw result.error;
-      setMessage('Check your email to confirm the account.', 'success');
-      authUsername.value = '';
+      setAuthMessage('Check your email to confirm the account.', 'success');
+      authForm.reset();
+      setAuthMode('login');
     } else {
       result = await supabaseClient.auth.signInWithPassword({ email, password: pass });
       if (result.error) throw result.error;
@@ -184,7 +201,7 @@ async function handleAuthSubmit() {
       setMessage(`Signed in as ${currentUser}.`, 'success');
     }
   } catch (err) {
-    setMessage(err.message || 'Unable to authenticate.', 'danger');
+    setAuthMessage(err.message || 'Unable to authenticate.', 'danger');
   }
 }
 
@@ -413,8 +430,7 @@ function generateExpertCluster(baseColor, count = 128) {
 }
 
 function getTimerForDifficulty() {
-  // All difficulties use a fixed 60 second timer per user's request
-  return 60;
+  return timerSetting;
 }
 
 function shuffle(array) {
@@ -575,7 +591,14 @@ async function loadHighScores() {
     .eq('user_id', currentUserId);
   if (error) return;
   data.forEach((row) => {
-    highScores[row.mode] = row.score;
+    // stored mode can include difficulty suffix like "hex|expert"
+    const parts = (row.mode || '').split('|');
+    const baseMode = parts[0] || row.mode;
+    const difficulty = parts[1] || null;
+    // only consider expert difficulty for global high score tracking
+    if (difficulty === 'expert') {
+      highScores[baseMode] = row.score;
+    }
   });
   highScoreValue.textContent = getCurrentHighScore();
 }
@@ -596,10 +619,12 @@ async function updateHighScoreIfNeeded() {
       setMessage('Sign in to save your score and appear on the global ranking.', 'danger');
       return;
     }
+    // store mode with difficulty suffix so global rankings can filter by difficulty
+    const dbMode = `${currentMode}|${currentDifficulty}`;
     // attempt upsert and request the inserted/updated row back for verification
     const { data, error } = await supabaseClient
       .from('highscores')
-      .upsert({ user_id: currentUserId, mode: currentMode, score }, { onConflict: ['user_id', 'mode'] })
+      .upsert({ user_id: currentUserId, mode: dbMode, score }, { onConflict: ['user_id', 'mode'] })
       .select();
 
     if (error) {
@@ -655,9 +680,13 @@ function renderLeaderboardRows(rows) {
 async function loadGlobalLeaderboard() {
   leaderboardMessage.textContent = 'Loading global rankings...';
   leaderboardTableBody.innerHTML = '<tr><td colspan="5">Loading…</td></tr>';
+  // Only include expert-difficulty entries in the global rankings.
+  // Rows are stored with mode like "hex|expert" so filter accordingly.
   let query = supabaseClient.from('highscores').select('user_id, mode, score, updated_at').order('score', { ascending: false }).limit(20);
-  if (globalLeaderboardMode !== 'all') {
-    query = query.eq('mode', globalLeaderboardMode);
+  if (globalLeaderboardMode === 'all') {
+    query = query.ilike('mode', '%|expert');
+  } else {
+    query = query.eq('mode', `${globalLeaderboardMode}|expert`);
   }
   const { data, error } = await query;
   if (error) {
@@ -691,11 +720,13 @@ async function loadGlobalLeaderboard() {
   
   const processedData = data.map((row) => ({
     ...row,
+    // extract base mode (e.g., "hex" from "hex|expert") for display
+    mode: (row.mode || '').split('|')[0] || row.mode,
     username: userProfiles[row.user_id]?.username || null,
     leaderboard_public: userProfiles[row.user_id]?.leaderboard_public || false
   }));
-  
-  leaderboardMessage.textContent = `Top ${data.length} scores ${globalLeaderboardMode === 'all' ? 'across all modes' : `for ${globalLeaderboardMode.toUpperCase()}`}.`;
+
+  leaderboardMessage.textContent = `Top ${data.length} expert scores ${globalLeaderboardMode === 'all' ? 'across all modes' : `for ${globalLeaderboardMode.toUpperCase()}`}.`;
   renderLeaderboardRows(processedData);
 }
 
@@ -858,6 +889,48 @@ function setMessage(text, type = "normal") {
   messageText.className = type === "normal" ? "message" : `message ${type}`;
 }
 
+function setAuthMessage(text, type = "normal") {
+  if (!authMessage) return;
+  authMessage.textContent = text;
+  authMessage.className = type === "normal" ? "message" : `message ${type}`;
+  authMessage.classList.remove('hidden');
+}
+
+function clearAuthMessage() {
+  if (!authMessage) return;
+  authMessage.textContent = '';
+  authMessage.classList.add('hidden');
+}
+
+function setAuthMode(mode) {
+  authMode = mode;
+  const isSignup = mode === 'signup';
+  authTitle.textContent = isSignup ? 'Create account' : 'Sign in';
+  authSubmitButton.textContent = isSignup ? 'Create account' : 'Sign in';
+  authHelpText.textContent = isSignup ? 'Choose a username and strong password to create a new account.' : 'Enter your email and password to sign in.';
+  authUsernameRow.classList.toggle('hidden', !isSignup);
+  authConfirmPasswordRow.classList.toggle('hidden', !isSignup);
+  authLoginTab.classList.toggle('active', !isSignup);
+  authLoginTab.setAttribute('aria-selected', !isSignup ? 'true' : 'false');
+  authSignupTab.classList.toggle('active', isSignup);
+  authSignupTab.setAttribute('aria-selected', isSignup ? 'true' : 'false');
+  authPassword.setAttribute('type', 'password');
+  authTogglePasswordButton.textContent = 'Show';
+  if (isSignup) {
+    authPassword.setAttribute('autocomplete', 'new-password');
+    authConfirmPassword.setAttribute('autocomplete', 'new-password');
+  } else {
+    authPassword.setAttribute('autocomplete', 'current-password');
+  }
+  clearAuthMessage();
+}
+
+function togglePasswordVisibility() {
+  const isPassword = authPassword.getAttribute('type') === 'password';
+  authPassword.setAttribute('type', isPassword ? 'text' : 'password');
+  authTogglePasswordButton.textContent = isPassword ? 'Hide' : 'Show';
+}
+
 function normalizeHex(value) {
   if (!value || typeof value !== 'string') return null;
   const v = value.trim().replace(/\s+/g, "").replace(/^#/, "").toUpperCase();
@@ -974,7 +1047,8 @@ function handleSubmit() {
   } else {
     streak = 0;
     // validation feedback
-    if (currentMode === 'hex' && normalizeHex(guess).length !== 6) {
+    const normalizedHex = normalizeHex(guess);
+  if (currentMode === 'hex' && normalizedHex === null) {
       setMessage('Invalid HEX format. Use RRGGBB or #RRGGBB.', 'danger');
     } else if (currentMode === 'rgb' && normalizeRgb(guess) === null) {
       setMessage('Invalid RGB format. Use "rgb(r,g,b)" or "r g b".', 'danger');
@@ -1149,40 +1223,20 @@ window.addEventListener("load", async () => {
   closeHelpButton.addEventListener('click', () => { closeModal(helpModal); });
   // Auth handlers
   authButton.addEventListener('click', () => {
-    authMode = 'login';
-    authTitle.textContent = 'Sign in';
-    authSubmitButton.textContent = 'Sign in';
-    authToggleLink.textContent = 'Create an account';
-    authEmail.value = '';
-    authPassword.value = '';
-    authUsername.value = '';
-    authUsernameRow.classList.add('hidden');
-    setMessage('Enter email and password to sign in.');
+    authForm.reset();
+    setAuthMode('login');
+    clearAuthMessage();
     openModal(authModal);
   });
   closeAuthButton.addEventListener('click', () => { closeModal(authModal); });
+  authLoginTab.addEventListener('click', () => setAuthMode('login'));
+  authSignupTab.addEventListener('click', () => setAuthMode('signup'));
+  authTogglePasswordButton.addEventListener('click', togglePasswordVisibility);
   authToggleLink.addEventListener('click', (e) => {
     e.preventDefault();
-    authEmail.value = '';
-    authPassword.value = '';
-    authUsername.value = '';
-    if (authMode === 'login') {
-      authMode = 'signup';
-      authTitle.textContent = 'Create account';
-      authSubmitButton.textContent = 'Create';
-      authToggleLink.textContent = 'Have an account? Sign in';
-      authUsernameRow.classList.remove('hidden');
-      setMessage('Enter a valid email, username, and password to create a new account.');
-    } else {
-      authMode = 'login';
-      authTitle.textContent = 'Sign in';
-      authSubmitButton.textContent = 'Sign in';
-      authToggleLink.textContent = 'Create an account';
-      authUsernameRow.classList.add('hidden');
-      setMessage('Enter your credentials and click Sign in.');
-    }
+    setAuthMode(authMode === 'login' ? 'signup' : 'login');
   });
-  authSubmitButton.addEventListener('click', () => handleAuthSubmit());
+  authForm.addEventListener('submit', handleAuthSubmit);
   logoutButton.addEventListener('click', () => signOut());
   if (accountSettingsButton) accountSettingsButton.addEventListener('click', () => openAccountSettings());
   if (closeAccountButton) closeAccountButton.addEventListener('click', () => { closeModal(accountModal); });
