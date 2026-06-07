@@ -555,6 +555,65 @@ button:focus, input:focus, select:focus {
   color: var(--danger);
 }
 
+.auth-form {
+  display: grid;
+  gap: 14px;
+}
+
+.auth-tabs {
+  display: flex;
+  gap: 10px;
+}
+
+.auth-tabs .tab {
+  flex: 1;
+  border: 1px solid var(--button-border);
+  background: var(--button-bg);
+  color: var(--text);
+  border-radius: 18px;
+  padding: 12px 14px;
+  cursor: pointer;
+}
+
+.auth-tabs .tab.active {
+  background: var(--button-active-bg);
+  border-color: var(--button-active-border);
+}
+
+.auth-help {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.auth-field label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.password-input-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.auth-field input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--text);
+}
+
+.control-button.small {
+  padding: 10px 12px;
+  min-width: 80px;
+}
+
 .footer {
   margin-top: 24px;
   padding: 22px 24px;
