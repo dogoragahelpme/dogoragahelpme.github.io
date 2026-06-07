@@ -276,18 +276,42 @@
       <div id="authModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="authTitle" aria-hidden="true">
         <div class="modal-content">
           <h3 id="authTitle">Sign in</h3>
-          <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
-            <div id="authUsernameRow" class="hidden">
-              <input id="authUsername" type="text" placeholder="Username" autocomplete="username">
+          <form id="authForm" class="auth-form" novalidate>
+            <div class="auth-tabs" role="tablist" aria-label="Authentication tabs">
+              <button type="button" class="tab active" id="loginTab" role="tab" aria-selected="true">Sign in</button>
+              <button type="button" class="tab" id="signupTab" role="tab" aria-selected="false">Sign up</button>
             </div>
-            <input id="authEmail" type="email" placeholder="Email" autocomplete="username">
-            <input id="authPassword" type="password" placeholder="Password" autocomplete="current-password">
-          </div>
-          <p style="margin-top:8px;"><a href="#" id="authToggleLink">Create an account</a></p>
-          <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end;">
-            <button class="control-button" id="authSubmitButton">Sign in</button>
-            <button class="control-button" id="closeAuthButton">Close</button>
-          </div>
+            <p class="auth-help" id="authHelpText">Enter your email and password to continue.</p>
+            <div class="auth-field auth-username-row hidden" id="authUsernameRow">
+              <label for="authUsername">Username
+                <input id="authUsername" type="text" placeholder="Pick a username" autocomplete="username">
+              </label>
+            </div>
+            <div class="auth-field">
+              <label for="authEmail">Email
+                <input id="authEmail" type="email" placeholder="you@example.com" autocomplete="email" required>
+              </label>
+            </div>
+            <div class="auth-field auth-password-row">
+              <label for="authPassword">Password
+                <div class="password-input-row">
+                  <input id="authPassword" type="password" placeholder="Enter password" autocomplete="current-password" required>
+                  <button type="button" class="control-button small" id="authTogglePasswordButton">Show</button>
+                </div>
+              </label>
+            </div>
+            <div class="auth-field auth-confirm-password-row hidden" id="authConfirmPasswordRow">
+              <label for="authConfirmPassword">Confirm password
+                <input id="authConfirmPassword" type="password" placeholder="Repeat password" autocomplete="new-password">
+              </label>
+            </div>
+            <div id="authMessage" class="message hidden" role="alert" aria-live="polite"></div>
+            <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end;">
+              <button class="control-button" type="submit" id="authSubmitButton">Sign in</button>
+              <button class="control-button" type="button" id="closeAuthButton">Close</button>
+            </div>
+            <p style="margin-top:10px; text-align:right;"><a href="#" id="authToggleLink">Create an account</a></p>
+          </form>
         </div>
       </div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
