@@ -8,6 +8,7 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'change-this-secret-in-production';
+const ADMIN_USERNAMES = (process.env.ADMIN_USERNAMES || 'dogoraga').split(',').map((name) => name.trim().toLowerCase()).filter(Boolean);
 const DATA_DIR = path.join(__dirname, 'data');
 const DB_PATH = path.join(DATA_DIR, 'colorguessa.db');
 
@@ -60,6 +61,18 @@ function authenticate(req, res, next) {
     req.user = payload;
     next();
   });
+}
+
+function isAdminUser(user) {
+  if (!user || !user.username) return false;
+  return ADMIN_USERNAMES.includes(String(user.username).toLowerCase());
+}
+
+function authorizeAdmin(req, res, next) {
+  if (!isAdminUser(req.user)) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+  next();
 }
 
 app.post('/api/signup', async (req, res) => {
@@ -133,6 +146,36 @@ app.post('/api/highscores', authenticate, (req, res) => {
       res.json({ mode, score: row.score });
     }
   });
+});
+
+app.get('/api/admin/report', authenticate, authorizeAdmin, (req, res) => {
+  db.get('SELECT COUNT(*) AS userCount FROM users', (userErr, userRow) => {
+    if (userErr) return res.status(500).json({ error: 'Unable to load user summary.' });
+    db.get('SELECT COUNT(*) AS totalEntries FROM highscores WHERE mode LIKE ?', ['%|expert'], (totalErr, totalRow) => {
+      if (totalErr) return res.status(500).json({ error: 'Unable to load leaderboard summary.' });
+      db.all('SELECT mode, COUNT(*) AS count FROM highscores WHERE mode LIKE ? GROUP BY mode', ['%|expert'], (modeErr, modeRows) => {
+        if (modeErr) return res.status(500).json({ error: 'Unable to load mode breakdown.' });
+        db.all('SELECT user_id, mode, score, updated_at FROM highscores WHERE mode LIKE ? ORDER BY score DESC LIMIT 10', ['%|expert'], (topErr, topRows) => {
+          if (topErr) return res.status(500).json({ error: 'Unable to load top entries.' });
+          res.json({
+            users: { total: userRow.userCount },
+            leaderboard: {
+              totalExpertEntries: totalRow.totalEntries || 0,
+              expertEntriesByMode: modeRows.reduce((acc, item) => {
+                acc[item.mode] = item.count;
+                return acc;
+              }, {}),
+              topEntries: topRows
+            }
+          });
+        });
+      });
+    });
+  });
+});
+
+app.get('/api/admin/refresh', authenticate, authorizeAdmin, (req, res) => {
+  res.json({ refreshed: true, message: 'Leaderboard refresh requested. Scores are derived from current database rows.' });
 });
 
 app.use((req, res) => {
