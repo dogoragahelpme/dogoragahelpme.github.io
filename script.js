@@ -1,24 +1,145 @@
 const colorData = [
-  { name: "Cerulean", hex: "#2A9DF4" },
-  { name: "Mint", hex: "#3EB489" },
-  { name: "Coral", hex: "#FF6B6B" },
-  { name: "Lavender", hex: "#9F7AEA" },
-  { name: "Sunset", hex: "#F59E0B" },
-  { name: "Aqua", hex: "#22D3EE" },
-  { name: "Emerald", hex: "#10B981" },
-  { name: "Rose", hex: "#F43F5E" },
-  { name: "Slate", hex: "#64748B" },
-  { name: "Peach", hex: "#FBCFE8" },
-  { name: "Teal", hex: "#14B8A6" },
-  { name: "Violet", hex: "#8B5CF6" },
-  { name: "Amber", hex: "#F59E0B" },
-  { name: "Magenta", hex: "#D946EF" },
-  { name: "Ocean", hex: "#0369A1" },
-  { name: "Citrine", hex: "#EAB308" },
-  { name: "Plum", hex: "#7C3AED" },
-  { name: "Sapphire", hex: "#0EA5E9" },
-  { name: "Moss", hex: "#4ADE80" },
-  { name: "Blush", hex: "#FB7185" }
+  { name: "AliceBlue", hex: "#F0F8FF" },
+  { name: "AntiqueWhite", hex: "#FAEBD7" },
+  { name: "Aqua", hex: "#00FFFF" },
+  { name: "Aquamarine", hex: "#7FFFD4" },
+  { name: "Azure", hex: "#F0FFFF" },
+  { name: "Beige", hex: "#F5F5DC" },
+  { name: "Bisque", hex: "#FFE4C4" },
+  { name: "Black", hex: "#000000" },
+  { name: "BlanchedAlmond", hex: "#FFEBCD" },
+  { name: "Blue", hex: "#0000FF" },
+  { name: "BlueViolet", hex: "#8A2BE2" },
+  { name: "Brown", hex: "#A52A2A" },
+  { name: "BurlyWood", hex: "#DEB887" },
+  { name: "CadetBlue", hex: "#5F9EA0" },
+  { name: "Chartreuse", hex: "#7FFF00" },
+  { name: "Chocolate", hex: "#D2691E" },
+  { name: "Coral", hex: "#FF7F50" },
+  { name: "CornflowerBlue", hex: "#6495ED" },
+  { name: "Cornsilk", hex: "#FFF8DC" },
+  { name: "Crimson", hex: "#DC143C" },
+  { name: "Cyan", hex: "#00FFFF" },
+  { name: "DarkBlue", hex: "#00008B" },
+  { name: "DarkCyan", hex: "#008B8B" },
+  { name: "DarkGoldenRod", hex: "#B8860B" },
+  { name: "DarkGray", hex: "#A9A9A9" },
+  { name: "DarkGreen", hex: "#006400" },
+  { name: "DarkKhaki", hex: "#BDB76B" },
+  { name: "DarkMagenta", hex: "#8B008B" },
+  { name: "DarkOliveGreen", hex: "#556B2F" },
+  { name: "DarkOrange", hex: "#FF8C00" },
+  { name: "DarkOrchid", hex: "#9932CC" },
+  { name: "DarkRed", hex: "#8B0000" },
+  { name: "DarkSalmon", hex: "#E9967A" },
+  { name: "DarkSeaGreen", hex: "#8FBC8F" },
+  { name: "DarkSlateBlue", hex: "#483D8B" },
+  { name: "DarkSlateGray", hex: "#2F4F4F" },
+  { name: "DarkTurquoise", hex: "#00CED1" },
+  { name: "DarkViolet", hex: "#9400D3" },
+  { name: "DeepPink", hex: "#FF1493" },
+  { name: "DeepSkyBlue", hex: "#00BFFF" },
+  { name: "DimGray", hex: "#696969" },
+  { name: "DodgerBlue", hex: "#1E90FF" },
+  { name: "FireBrick", hex: "#B22222" },
+  { name: "FloralWhite", hex: "#FFFAF0" },
+  { name: "ForestGreen", hex: "#228B22" },
+  { name: "Fuchsia", hex: "#FF00FF" },
+  { name: "Gainsboro", hex: "#DCDCDC" },
+  { name: "GhostWhite", hex: "#F8F8FF" },
+  { name: "Gold", hex: "#FFD700" },
+  { name: "GoldenRod", hex: "#DAA520" },
+  { name: "Gray", hex: "#808080" },
+  { name: "Green", hex: "#008000" },
+  { name: "GreenYellow", hex: "#ADFF2F" },
+  { name: "HoneyDew", hex: "#F0FFF0" },
+  { name: "HotPink", hex: "#FF69B4" },
+  { name: "IndianRed", hex: "#CD5C5C" },
+  { name: "Indigo", hex: "#4B0082" },
+  { name: "Ivory", hex: "#FFFFF0" },
+  { name: "Khaki", hex: "#F0E68C" },
+  { name: "Lavender", hex: "#E6E6FA" },
+  { name: "LavenderBlush", hex: "#FFF0F5" },
+  { name: "LawnGreen", hex: "#7CFC00" },
+  { name: "LemonChiffon", hex: "#FFFACD" },
+  { name: "LightBlue", hex: "#ADD8E6" },
+  { name: "LightCoral", hex: "#F08080" },
+  { name: "LightCyan", hex: "#E0FFFF" },
+  { name: "LightGoldenRodYellow", hex: "#FAFAD2" },
+  { name: "LightGray", hex: "#D3D3D3" },
+  { name: "LightGreen", hex: "#90EE90" },
+  { name: "LightPink", hex: "#FFB6C1" },
+  { name: "LightSalmon", hex: "#FFA07A" },
+  { name: "LightSeaGreen", hex: "#20B2AA" },
+  { name: "LightSkyBlue", hex: "#87CEFA" },
+  { name: "LightSlateGray", hex: "#778899" },
+  { name: "LightSteelBlue", hex: "#B0C4DE" },
+  { name: "LightYellow", hex: "#FFFFE0" },
+  { name: "Lime", hex: "#00FF00" },
+  { name: "LimeGreen", hex: "#32CD32" },
+  { name: "Linen", hex: "#FAF0E6" },
+  { name: "Magenta", hex: "#FF00FF" },
+  { name: "Maroon", hex: "#800000" },
+  { name: "MediumAquaMarine", hex: "#66CDAA" },
+  { name: "MediumBlue", hex: "#0000CD" },
+  { name: "MediumOrchid", hex: "#BA55D3" },
+  { name: "MediumPurple", hex: "#9370DB" },
+  { name: "MediumSeaGreen", hex: "#3CB371" },
+  { name: "MediumSlateBlue", hex: "#7B68EE" },
+  { name: "MediumSpringGreen", hex: "#00FA9A" },
+  { name: "MediumTurquoise", hex: "#48D1CC" },
+  { name: "MediumVioletRed", hex: "#C71585" },
+  { name: "MidnightBlue", hex: "#191970" },
+  { name: "MintCream", hex: "#F5FFFA" },
+  { name: "MistyRose", hex: "#FFE4E1" },
+  { name: "Moccasin", hex: "#FFE4B5" },
+  { name: "NavajoWhite", hex: "#FFDEAD" },
+  { name: "Navy", hex: "#000080" },
+  { name: "OldLace", hex: "#FDF5E6" },
+  { name: "Olive", hex: "#808000" },
+  { name: "OliveDrab", hex: "#6B8E23" },
+  { name: "Orange", hex: "#FFA500" },
+  { name: "OrangeRed", hex: "#FF4500" },
+  { name: "Orchid", hex: "#DA70D6" },
+  { name: "PaleGoldenRod", hex: "#EEE8AA" },
+  { name: "PaleGreen", hex: "#98FB98" },
+  { name: "PaleTurquoise", hex: "#AFEEEE" },
+  { name: "PaleVioletRed", hex: "#DB7093" },
+  { name: "PapayaWhip", hex: "#FFEFD5" },
+  { name: "PeachPuff", hex: "#FFDAB9" },
+  { name: "Peru", hex: "#CD853F" },
+  { name: "Pink", hex: "#FFC0CB" },
+  { name: "Plum", hex: "#DDA0DD" },
+  { name: "PowderBlue", hex: "#B0E0E6" },
+  { name: "Purple", hex: "#800080" },
+  { name: "RebeccaPurple", hex: "#663399" },
+  { name: "Red", hex: "#FF0000" },
+  { name: "RosyBrown", hex: "#BC8F8F" },
+  { name: "RoyalBlue", hex: "#4169E1" },
+  { name: "SaddleBrown", hex: "#8B4513" },
+  { name: "Salmon", hex: "#FA8072" },
+  { name: "SandyBrown", hex: "#F4A460" },
+  { name: "SeaGreen", hex: "#2E8B57" },
+  { name: "SeaShell", hex: "#FFF5EE" },
+  { name: "Sienna", hex: "#A0522D" },
+  { name: "Silver", hex: "#C0C0C0" },
+  { name: "SkyBlue", hex: "#87CEEB" },
+  { name: "SlateBlue", hex: "#6A5ACD" },
+  { name: "SlateGray", hex: "#708090" },
+  { name: "Snow", hex: "#FFFAFA" },
+  { name: "SpringGreen", hex: "#00FF7F" },
+  { name: "SteelBlue", hex: "#4682B4" },
+  { name: "Tan", hex: "#D2B48C" },
+  { name: "Teal", hex: "#008080" },
+  { name: "Thistle", hex: "#D8BFD8" },
+  { name: "Tomato", hex: "#FF6347" },
+  { name: "Turquoise", hex: "#40E0D0" },
+  { name: "Violet", hex: "#EE82EE" },
+  { name: "Wheat", hex: "#F5DEB3" },
+  { name: "White", hex: "#FFFFFF" },
+  { name: "WhiteSmoke", hex: "#F5F5F5" },
+  { name: "Yellow", hex: "#FFFF00" },
+  { name: "YellowGreen", hex: "#9ACD32" }
 ];
 
 const swatch = document.getElementById("colorSwatch");
@@ -62,6 +183,10 @@ const authUsername = document.getElementById("authUsername");
 const authUsernameRow = document.getElementById("authUsernameRow");
 const authConfirmPassword = document.getElementById("authConfirmPassword");
 const authConfirmPasswordRow = document.getElementById("authConfirmPasswordRow");
+const authAgreeCheckbox = document.getElementById("authAgreeCheckbox");
+const authAgreeRow = document.getElementById("authAgreeRow");
+const authTermsLink = document.getElementById("authTermsLink");
+const authPrivacyLink = document.getElementById("authPrivacyLink");
 const authTitle = document.getElementById("authTitle");
 const authHelpText = document.getElementById("authHelpText");
 const authTogglePasswordButton = document.getElementById("authTogglePasswordButton");
@@ -93,24 +218,52 @@ const startPage = document.getElementById("startPage");
 const gamePage = document.getElementById("gamePage");
 const infoPage = document.getElementById("infoPage");
 const leaderboardPage = document.getElementById("leaderboardPage");
-const leaderboardTableBody = document.getElementById("leaderboardTableBody");
-const leaderboardMessage = document.getElementById("leaderboardMessage");
-const leaderboardAllButton = document.getElementById("leaderboardAllButton");
-const leaderboardNameButton = document.getElementById("leaderboardNameButton");
-const leaderboardHexButton = document.getElementById("leaderboardHexButton");
 const leaderboardRgbButton = document.getElementById("leaderboardRgbButton");
 const leaderboardHslButton = document.getElementById("leaderboardHslButton");
 const startGameButton = document.getElementById("startGameButton");
 const viewHelpButton = document.getElementById("viewHelpButton");
 const backToHomeButton = document.getElementById("backToHomeButton");
-const backToHomeButtonFromLeaderboard = document.getElementById("backToHomeButtonFromLeaderboard");
 
-const difficultyByMode = {
-  name: "hard",
-  hex: "hard",
-  rgb: "hard",
-  hsl: "hard"
-};
+const USERNAME_PATTERN = /^[A-Za-z0-9]+$/;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+async function isUsernameTaken(username, excludeUserId = null) {
+  if (!username) return false;
+  try {
+    const { data, error } = await supabaseClient
+      .from('highscores')
+      .select('user_id')
+      .eq('username', username)
+      .limit(1);
+    if (error) {
+      console.warn('Unable to check username uniqueness:', error.message || error);
+      return false;
+    }
+    if (!data || data.length === 0) return false;
+    return excludeUserId ? String(data[0].user_id) !== String(excludeUserId) : true;
+  } catch (err) {
+    console.warn('Username uniqueness check failed:', err.message || err);
+    return false;
+  }
+}
+
+function validateUsername(username) {
+  return USERNAME_PATTERN.test(username);
+}
+
+function validateEmail(email) {
+  return EMAIL_PATTERN.test(email);
+}
+
+const backToHomeButtonFromLeaderboard = document.getElementById("backToHomeButtonFromLeaderboard");
+const termsLink = document.getElementById("termsLink");
+const privacyLink = document.getElementById("privacyLink");
+const termsBackButton = document.getElementById("termsBackButton");
+const privacyBackButton = document.getElementById("privacyBackButton");
+const adminSection = document.getElementById("adminSection");
+const adminRefreshLeaderboardButton = document.getElementById("adminRefreshLeaderboardButton");
+const adminViewStatsButton = document.getElementById("adminViewStatsButton");
+const adminInfo = document.getElementById("adminInfo");
 
 let currentDifficulty = "hard";
 let currentMode = "hex";
@@ -121,12 +274,7 @@ let streak = 0;
 let timeLeft = 60;
 let countdown = null;
 let gameActive = false;
-let highScores = {
-  name: 0,
-  hex: 0,
-  rgb: 0,
-  hsl: 0
-};
+let highScores = {};
 let sessionRounds = 0;
 let sessionCorrect = 0;
 let sessionStartTime = null;
@@ -137,6 +285,7 @@ let activeModal = null;
 let previousFocus = null;
 let currentUser = null;
 let currentUserId = null;
+let currentUserEmail = null;
 let authMode = 'login';
 
 const SUPABASE_URL = 'https://yqdwjcpxgnomiixzykdl.supabase.co';
@@ -147,10 +296,123 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
 
+const recentExpertColors = new Set();
+const expertHistoryLimit = 200;
+
+function getRandomHexColor() {
+  const value = Math.floor(Math.random() * 0x1000000);
+  return `#${value.toString(16).padStart(6, '0').toUpperCase()}`;
+}
+
+function getUniqueExpertHexColor() {
+  let hex = getRandomHexColor();
+  for (let attempts = 0; attempts < 12 && recentExpertColors.has(hex); attempts += 1) {
+    hex = getRandomHexColor();
+  }
+
+  if (recentExpertColors.has(hex)) {
+    const first = recentExpertColors.values().next().value;
+    if (first) recentExpertColors.delete(first);
+  }
+
+  recentExpertColors.add(hex);
+  while (recentExpertColors.size > expertHistoryLimit) {
+    const first = recentExpertColors.values().next().value;
+    if (!first) break;
+    recentExpertColors.delete(first);
+  }
+  return hex;
+}
+
+function isAdminUser() {
+  if (!currentUser) return false;
+  const username = String(currentUser).toLowerCase();
+  const email = currentUserEmail ? String(currentUserEmail).toLowerCase() : '';
+  return username === 'dogoraga' || email === 'colorguessa@colorguessa.com';
+}
+
+function updateAdminUI() {
+  const admin = isAdminUser();
+  if (adminSection) adminSection.classList.toggle('hidden', !admin);
+  if (adminInfo && !admin) adminInfo.textContent = '';
+  if (authButton) {
+    authButton.textContent = currentUser ? `Hi, ${currentUser}${admin ? ' (Admin)' : ''}` : 'Sign in';
+    authButton.setAttribute('aria-label', currentUser ? `Signed in as ${currentUser}${admin ? ' (Admin)' : ''}` : 'Sign in to save your progress');
+    authButton.classList.toggle('admin-badge', admin);
+  }
+}
+
+function setAdminInfo(message, type = 'info') {
+  if (!adminInfo) return;
+  adminInfo.textContent = message;
+  adminInfo.style.color = type === 'error' ? '#b91c1c' : '#1f2937';
+}
+
+function ensureAdmin() {
+  if (!isAdminUser()) {
+    setAdminInfo('Admin access required.');
+    return false;
+  }
+  return true;
+}
+
+async function showAdminReport() {
+  if (!ensureAdmin()) return;
+  if (!adminInfo) return;
+
+  setAdminInfo('Loading admin report...');
+  try {
+    const totalResp = await supabaseClient
+      .from('highscores')
+      .select('id', { count: 'exact', head: true })
+      .ilike('mode', '%|expert');
+    if (totalResp.error) throw totalResp.error;
+    const totalExpertEntries = totalResp.count || 0;
+
+    const modes = ['name', 'hex', 'rgb', 'hsl'];
+    const modeCounts = {};
+    for (const mode of modes) {
+      const modeResp = await supabaseClient
+        .from('highscores')
+        .select('id', { count: 'exact', head: true })
+        .eq('mode', `${mode}|expert`);
+      if (modeResp.error) throw modeResp.error;
+      modeCounts[mode] = modeResp.count || 0;
+    }
+
+    const topResp = await supabaseClient
+      .from('highscores')
+      .select('user_id, username, mode, score, leaderboard_public')
+      .ilike('mode', '%|expert')
+      .order('score', { ascending: false })
+      .limit(10);
+    if (topResp.error) throw topResp.error;
+    const topRows = topResp.data || [];
+    const topItems = topRows.map((row, index) => {
+      const displayName = row.username || `${String(row.user_id).slice(0, 8)}...`;
+      const publicFlag = row.leaderboard_public ? 'public' : 'hidden';
+      const baseMode = (row.mode || '').split('|')[0] || row.mode;
+      return `${index + 1}. ${displayName} — ${baseMode.toUpperCase()} — ${row.score} (${publicFlag})`;
+    }).join('\n');
+
+    const report = [
+      `Admin report for expert leaderboard`,``,
+      `Total expert leaderboard entries: ${totalExpertEntries}`,
+      `Entries by mode: ${modes.map((m) => `${m.toUpperCase()}: ${modeCounts[m]}`).join(', ')}`,
+      `Top 10 expert entries:`,`${topItems || 'No top entries available.'}`
+    ].join('\n');
+
+    adminInfo.innerHTML = report.replace(/\n/g, '<br>');
+  } catch (err) {
+    setAdminInfo(`Unable to load admin report: ${err.message || err}`, 'error');
+  }
+}
+
 function updateAuthUI() {
   if (currentUser) {
-    authButton.textContent = `Hi, ${currentUser}`;
-    authButton.setAttribute('aria-label', `Signed in as ${currentUser}`);
+    const admin = isAdminUser();
+    authButton.textContent = `Hi, ${currentUser}${admin ? ' (Admin)' : ''}`;
+    authButton.setAttribute('aria-label', `Signed in as ${currentUser}${admin ? ' (Admin)' : ''}`);
     logoutButton.classList.remove('hidden');
     if (accountSettingsButton) accountSettingsButton.classList.remove('hidden');
   } else {
@@ -159,6 +421,7 @@ function updateAuthUI() {
     logoutButton.classList.add('hidden');
     if (accountSettingsButton) accountSettingsButton.classList.add('hidden');
   }
+  updateAdminUI();
 }
 
 async function handleAuthSubmit(event) {
@@ -170,10 +433,16 @@ async function handleAuthSubmit(event) {
 
   clearAuthMessage();
   if (!email || !pass) { setAuthMessage('Enter email and password.', 'danger'); return; }
+  if (!validateEmail(email)) { setAuthMessage('Enter a valid email address.', 'danger'); return; }
   if (authMode === 'signup') {
     if (!username) { setAuthMessage('Choose a username for your account.', 'danger'); return; }
+    if (!validateUsername(username)) { setAuthMessage('Usernames may use only letters and numbers.', 'danger'); return; }
+    if (username.length < 3) { setAuthMessage('Username must be at least 3 characters.', 'danger'); return; }
     if (pass.length < 8) { setAuthMessage('Password must be at least 8 characters.', 'danger'); return; }
     if (pass !== confirmPass) { setAuthMessage('Passwords do not match.', 'danger'); return; }
+    if (!authAgreeCheckbox?.checked) { setAuthMessage('You must agree to the Terms of Service and Privacy Policy.', 'danger'); return; }
+    const usernameTaken = await isUsernameTaken(username);
+    if (usernameTaken) { setAuthMessage('That username is already taken. Choose another.', 'danger'); return; }
   }
 
   try {
@@ -194,6 +463,7 @@ async function handleAuthSubmit(event) {
       result = await supabaseClient.auth.signInWithPassword({ email, password: pass });
       if (result.error) throw result.error;
       currentUserId = result.data.user.id;
+      currentUserEmail = result.data.user.email;
       currentUser = result.data.user.user_metadata?.username || result.data.user.email;
       updateAuthUI();
       closeModal(authModal);
@@ -201,7 +471,16 @@ async function handleAuthSubmit(event) {
       setMessage(`Signed in as ${currentUser}.`, 'success');
     }
   } catch (err) {
-    setAuthMessage(err.message || 'Unable to authenticate.', 'danger');
+    const msg = err.message || 'Unable to authenticate.';
+    if (/already registered|duplicate/i.test(msg)) {
+      setAuthMessage('This email is already registered. Sign in or use another email.', 'danger');
+    } else if (/invalid email/i.test(msg)) {
+      setAuthMessage('Enter a valid email address.', 'danger');
+    } else if (/password/i.test(msg) && /at least/i.test(msg)) {
+      setAuthMessage('Password must be at least 8 characters.', 'danger');
+    } else {
+      setAuthMessage(msg, 'danger');
+    }
   }
 }
 
@@ -211,7 +490,7 @@ async function signOut() {
   currentUserId = null;
   setMessage('Signed out.');
   updateAuthUI();
-  highScores = { name: 0, hex: 0, rgb: 0, hsl: 0 };
+  highScores = {};
   highScoreValue.textContent = '0';
 }
 
@@ -335,6 +614,29 @@ async function saveAccountSettings() {
   const leaderboard_public = accountLeaderboardPublic.checked;
   const theme = accountThemeSelect.value || currentTheme;
   const newEmail = (accountEmail.value || '').trim();
+
+  if (!username) {
+    setMessage('Choose a username.', 'danger');
+    return;
+  }
+  if (!validateUsername(username)) {
+    setMessage('Usernames may use only letters and numbers.', 'danger');
+    return;
+  }
+  if (username.length < 3) {
+    setMessage('Username must be at least 3 characters.', 'danger');
+    return;
+  }
+  const usernameTaken = await isUsernameTaken(username, currentUserId);
+  if (usernameTaken) {
+    setMessage('That username is already taken. Choose another.', 'danger');
+    return;
+  }
+  if (newEmail && !validateEmail(newEmail)) {
+    setMessage('Enter a valid email address.', 'danger');
+    return;
+  }
+
   const payload = { data: { username, leaderboard_public, theme } };
   if (newEmail && newEmail !== (currentUser || '')) payload.email = newEmail;
   try {
@@ -345,7 +647,12 @@ async function saveAccountSettings() {
     setMessage('Account settings saved.', 'success');
     closeModal(accountModal);
   } catch (err) {
-    setMessage(err.message || 'Unable to save account settings.', 'danger');
+    const msg = err.message || 'Unable to save account settings.';
+    if (/already registered|duplicate/i.test(msg)) {
+      setMessage('That email is already registered. Use another address.', 'danger');
+    } else {
+      setMessage(msg, 'danger');
+    }
   }
 }
 
@@ -380,57 +687,99 @@ function getOptionsCountForDifficulty(diff) {
     case 'very-easy': return 2;
     case 'easy': return 4;
     case 'medium': return 6;
+    case 'hard': return 0;
+    case 'expert': return 0;
     default: return 0; // 0 = typed input
   }
 }
 
-function generateExtendedPalette(baseColors) {
+function generateExtendedPalette(baseColors, deltas = [-20, -10, 10, 20]) {
   const extended = [];
   const seen = new Set();
   baseColors.forEach((c) => {
-    // include original
-    if (!seen.has(c.hex)) { extended.push({ name: c.name, hex: c.hex }); seen.add(c.hex); }
-    // generate 4 shades by altering lightness
+    if (!seen.has(c.hex)) {
+      extended.push({ name: c.name, hex: c.hex });
+      seen.add(c.hex);
+    }
     const hsl = hexToHsl(c.hex);
-    [-20, -10, 10, 20].forEach((delta) => {
+    deltas.forEach((delta) => {
       const l = Math.max(0, Math.min(100, hsl.l + delta));
       const hex = hslToHex(hsl.h, hsl.s, l);
-      if (!seen.has(hex)) { extended.push({ name: `${c.name} ${delta>0?'+':''}${delta}`, hex }); seen.add(hex); }
+      if (!seen.has(hex)) {
+        extended.push({ name: `${c.name} ${delta > 0 ? '+' : ''}${delta}`, hex });
+        seen.add(hex);
+      }
     });
   });
   return extended;
 }
 
+function getPaletteForDifficulty(mode, difficulty) {
+  if (mode === 'name') {
+    switch (difficulty) {
+      case 'very-easy':
+        return colorData.slice(0, 16);
+      case 'easy':
+        return colorData.slice(0, 40);
+      case 'medium':
+        return colorData.slice(0, 80);
+      case 'hard':
+        return colorData.slice(0, 120);
+      case 'expert':
+        return colorData.slice();
+      default:
+        return colorData.slice();
+    }
+  }
+
+  switch (difficulty) {
+    case 'very-easy':
+      return colorData.slice(0, 16);
+    case 'easy':
+      return colorData.slice();
+    case 'medium':
+      return generateExtendedPalette(colorData, [-15, -10, 10, 15]);
+    case 'hard':
+      return generateExtendedPalette(colorData, [-25, -20, -15, -10, 10, 15, 20, 25]);
+    case 'expert':
+      return null;
+    default:
+      return colorData.slice();
+  }
+}
+
 // For Expert mode: generate a dense cluster of very similar shades around a single base color.
-function generateExpertCluster(baseColor, count = 128) {
+function generateExpertCluster(baseColor, count = 1024) {
   const hsl = hexToHsl(baseColor.hex);
-  const seen = new Set();
-  seen.add(baseColor.hex.toUpperCase());
   const cluster = [{ name: baseColor.name, hex: baseColor.hex }];
-  // produce many tiny variations in H, S, L to make distinguishing them hard
-  while (cluster.length < count) {
-    const dh = (Math.random() * 6) - 3; // -3 .. +3 degrees
-    const ds = (Math.random() * 4) - 2; // -2 .. +2 percent
-    const dl = (Math.random() * 4) - 2; // -2 .. +2 percent
+  for (let i = 1; i < count; i += 1) {
+    const dh = (Math.random() * 60) - 30; // widen range to allow many unique variants
+    const ds = (Math.random() * 40) - 20;
+    const dl = (Math.random() * 40) - 20;
     const h = (hsl.h + dh + 360) % 360;
     const s = Math.max(0, Math.min(100, hsl.s + ds));
     const l = Math.max(0, Math.min(100, hsl.l + dl));
     const hex = hslToHex(h, s, l).toUpperCase();
-    if (!seen.has(hex)) {
-      seen.add(hex);
-      cluster.push({ name: baseColor.name, hex });
-    }
-    // safety to avoid infinite loop: if we've tried many times, widen the variation slightly
-    if (seen.size % 50 === 0) {
-      // slightly increase allowed variation
-      // intentionally noop here; randomness will eventually produce new values
-    }
+    cluster.push({ name: baseColor.name, hex });
   }
   return cluster;
 }
 
 function getTimerForDifficulty() {
-  return timerSetting;
+  switch (currentDifficulty) {
+    case 'very-easy':
+      return Math.min(timerSetting + 15, 120);
+    case 'easy':
+      return Math.min(timerSetting + 10, 120);
+    case 'medium':
+      return timerSetting;
+    case 'hard':
+      return Math.max(timerSetting - 10, 10);
+    case 'expert':
+      return Math.max(timerSetting - 20, 10);
+    default:
+      return timerSetting;
+  }
 }
 
 function shuffle(array) {
@@ -485,7 +834,8 @@ function getDisplayValue(color) {
     return color.name;
   }
   if (currentMode === "hex") {
-    return color.hex.toUpperCase();
+    const hex = color.hex.toUpperCase();
+    return hex.startsWith('#') ? hex : `#${hex}`;
   }
   if (currentMode === "rgb") {
     const { r, g, b } = hexToRgb(color.hex);
@@ -529,14 +879,11 @@ function getPromptLabel(mode) {
 }
 
 function chooseTarget() {
-  // Determine palette depending on difficulty
-  let palette;
-  if (currentDifficulty === 'expert') {
-    // pick a single base color and generate a dense cluster around it
-    const base = colorData[getRandomInt(colorData.length)];
-    palette = generateExpertCluster(base, 128);
-  } else {
-    palette = currentDifficulty === 'hard' ? generateExtendedPalette(colorData) : colorData.slice();
+  // Use a larger palette as difficulty increases.
+  let palette = getPaletteForDifficulty(currentMode, currentDifficulty);
+  if (palette === null) {
+    const randomHex = getUniqueExpertHexColor();
+    palette = [{ name: 'Random', hex: randomHex }];
   }
   const optionsCount = getOptionsCountForDifficulty(currentDifficulty);
 
@@ -546,7 +893,7 @@ function chooseTarget() {
 
     targetLabel.textContent = `Choose the correct ${getModeLabel(currentMode).toLowerCase()}`;
     targetName.textContent = "Select the right answer from below";
-    swatch.style.backgroundColor = targetColor.hex;
+    swatch.style.backgroundColor = targetColor.hex.startsWith('#') ? targetColor.hex : `#${targetColor.hex}`;
 
     answerInput.value = "";
     answerInput.disabled = true;
@@ -570,7 +917,7 @@ function chooseTarget() {
 
     targetLabel.textContent = getPromptLabel(currentMode);
     targetName.textContent = "Type your answer below";
-    swatch.style.backgroundColor = targetColor.hex;
+    swatch.style.backgroundColor = targetColor.hex.startsWith('#') ? targetColor.hex : `#${targetColor.hex}`;
 
     answerInput.value = "";
     answerInput.disabled = false;
@@ -583,7 +930,7 @@ function chooseTarget() {
 }
 
 async function loadHighScores() {
-  highScores = { name: 0, hex: 0, rgb: 0, hsl: 0 };
+  highScores = {};
   if (!currentUserId) return;
   const { data, error } = await supabaseClient
     .from('highscores')
@@ -591,14 +938,12 @@ async function loadHighScores() {
     .eq('user_id', currentUserId);
   if (error) return;
   data.forEach((row) => {
-    // stored mode can include difficulty suffix like "hex|expert"
     const parts = (row.mode || '').split('|');
     const baseMode = parts[0] || row.mode;
-    const difficulty = parts[1] || null;
-    // only consider expert difficulty for global high score tracking
-    if (difficulty === 'expert') {
-      highScores[baseMode] = row.score;
-    }
+    const difficulty = parts[1] || 'default';
+    const key = difficulty === 'default' ? baseMode : `${baseMode}|${difficulty}`;
+    highScores[key] = Math.max(highScores[key] || 0, row.score);
+    highScores[baseMode] = Math.max(highScores[baseMode] || 0, row.score);
   });
   highScoreValue.textContent = getCurrentHighScore();
 }
@@ -608,23 +953,47 @@ function saveHighScores() {
 }
 
 function getCurrentHighScore() {
-  return highScores[currentMode] || 0;
+  const key = `${currentMode}|${currentDifficulty}`;
+  return highScores[key] ?? highScores[currentMode] ?? 0;
+}
+
+function getScoreForCorrectAnswer() {
+  switch (currentDifficulty) {
+    case 'very-easy':
+      return 6;
+    case 'easy':
+      return 10;
+    case 'medium':
+      return 14;
+    case 'hard':
+      return 18;
+    case 'expert':
+      return 24;
+    default:
+      return 10;
+  }
 }
 
 async function updateHighScoreIfNeeded() {
   if (score > getCurrentHighScore()) {
-    highScores[currentMode] = score;
+    const key = `${currentMode}|${currentDifficulty}`;
+    highScores[key] = score;
+    highScores[currentMode] = Math.max(highScores[currentMode] || 0, score);
     highScoreValue.textContent = score;
     if (!currentUserId) {
-      setMessage('Sign in to save your score and appear on the global ranking.', 'danger');
+      setMessage(currentDifficulty === 'expert'
+        ? 'Sign in to save your expert score and appear on the global leaderboard.'
+        : 'Sign in to save your score and appear on the global leaderboard.',
+      'danger');
       return;
     }
     // store mode with difficulty suffix so global rankings can filter by difficulty
     const dbMode = `${currentMode}|${currentDifficulty}`;
-    // attempt upsert and request the inserted/updated row back for verification
+    const dbRow = { user_id: currentUserId, mode: dbMode, score, username: currentUser, leaderboard_public: true };
+    // Avoid optional columns if the Supabase table does not include them.
     const { data, error } = await supabaseClient
       .from('highscores')
-      .upsert({ user_id: currentUserId, mode: dbMode, score }, { onConflict: ['user_id', 'mode'] })
+      .upsert(dbRow, { onConflict: ['user_id', 'mode'] })
       .select();
 
     if (error) {
@@ -654,8 +1023,10 @@ async function updateHighScoreIfNeeded() {
 
 function formatLeaderboardPlayer(row) {
   if (!row || !row.user_id) return 'Unknown';
-  if (row.user_id === currentUserId) return 'You';
-  return row.username && row.leaderboard_public ? row.username : `${row.user_id.slice(0, 8)}...`;
+  const isOwn = currentUserId && String(row.user_id) === String(currentUserId);
+  const username = row.username || (isOwn ? currentUser : null);
+  if (username && (row.leaderboard_public || isOwn)) return username;
+  return `${String(row.user_id).slice(0, 8)}...`;
 }
 
 function renderLeaderboardRows(rows) {
@@ -682,13 +1053,27 @@ async function loadGlobalLeaderboard() {
   leaderboardTableBody.innerHTML = '<tr><td colspan="5">Loading…</td></tr>';
   // Only include expert-difficulty entries in the global rankings.
   // Rows are stored with mode like "hex|expert" so filter accordingly.
-  let query = supabaseClient.from('highscores').select('user_id, mode, score, updated_at').order('score', { ascending: false }).limit(20);
-  if (globalLeaderboardMode === 'all') {
-    query = query.ilike('mode', '%|expert');
-  } else {
-    query = query.eq('mode', `${globalLeaderboardMode}|expert`);
+  let data;
+  let error;
+
+  const tryQuery = async (selectFields) => {
+    const query = supabaseClient.from('highscores')
+      .select(selectFields)
+      .order('score', { ascending: false })
+      .limit(20);
+    if (globalLeaderboardMode === 'all') {
+      return query.ilike('mode', '%|expert');
+    }
+    return query.eq('mode', `${globalLeaderboardMode}|expert`);
+  };
+
+  ({ data, error } = await tryQuery('user_id, mode, score, updated_at, username, leaderboard_public'));
+
+  if (error && /username|leaderboard_public/i.test(error.message || '')) {
+    console.warn('Leaderboard query fallback due to missing optional columns:', error.message);
+    ({ data, error } = await tryQuery('user_id, mode, score, updated_at'));
   }
-  const { data, error } = await query;
+
   if (error) {
     leaderboardMessage.textContent = 'Unable to load leaderboard. Check Supabase configuration and policies.';
     leaderboardTableBody.innerHTML = '<tr><td colspan="5">Unable to load rankings.</td></tr>';
@@ -701,29 +1086,12 @@ async function loadGlobalLeaderboard() {
     return;
   }
   
-  const userIds = [...new Set(data.map(row => row.user_id))];
-  let userProfiles = {};
-  
-  if (userIds.length > 0) {
-    // Try to fetch from profiles table
-    const { data: profiles } = await supabaseClient
-      .from('profiles')
-      .select('id, username, leaderboard_public')
-      .in('id', userIds);
-    
-    if (profiles) {
-      profiles.forEach(profile => {
-        userProfiles[profile.id] = profile;
-      });
-    }
-  }
-  
   const processedData = data.map((row) => ({
     ...row,
     // extract base mode (e.g., "hex" from "hex|expert") for display
     mode: (row.mode || '').split('|')[0] || row.mode,
-    username: userProfiles[row.user_id]?.username || null,
-    leaderboard_public: userProfiles[row.user_id]?.leaderboard_public || false
+    username: row.username || null,
+    leaderboard_public: row.leaderboard_public == null ? true : row.leaderboard_public
   }));
 
   leaderboardMessage.textContent = `Top ${data.length} expert scores ${globalLeaderboardMode === 'all' ? 'across all modes' : `for ${globalLeaderboardMode.toUpperCase()}`}.`;
@@ -732,7 +1100,6 @@ async function loadGlobalLeaderboard() {
 
 async function setLeaderboardMode(mode) {
   globalLeaderboardMode = mode;
-  leaderboardAllButton.classList.toggle('active', mode === 'all');
   leaderboardNameButton.classList.toggle('active', mode === 'name');
   leaderboardHexButton.classList.toggle('active', mode === 'hex');
   leaderboardRgbButton.classList.toggle('active', mode === 'rgb');
@@ -829,7 +1196,9 @@ function showPage(page) {
     start: startPage,
     play: gamePage,
     info: infoPage,
-    leaderboard: leaderboardPage
+    leaderboard: leaderboardPage,
+    terms: document.getElementById('termsPage'),
+    privacy: document.getElementById('privacyPage')
   };
 
   Object.values(pages).forEach((el) => el?.classList.add('hidden'));
@@ -839,24 +1208,6 @@ function showPage(page) {
   playPageButton.classList.toggle('active', page === 'play');
   leaderboardPageButton.classList.toggle('active', page === 'leaderboard');
   infoButton.classList.toggle('active', page === 'info');
-}
-
-function trapModalFocus(event) {
-  if (!activeModal || event.key !== 'Tab') return;
-  const focusable = Array.from(activeModal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'))
-    .filter((el) => !el.disabled && el.offsetParent !== null);
-  if (!focusable.length) return;
-  const currentIndex = focusable.indexOf(document.activeElement);
-  let nextIndex = currentIndex;
-
-  if (event.shiftKey) {
-    nextIndex = currentIndex <= 0 ? focusable.length - 1 : currentIndex - 1;
-  } else {
-    nextIndex = currentIndex === focusable.length - 1 ? 0 : currentIndex + 1;
-  }
-
-  event.preventDefault();
-  focusable[nextIndex].focus();
 }
 
 function openModal(modal) {
@@ -910,6 +1261,8 @@ function setAuthMode(mode) {
   authHelpText.textContent = isSignup ? 'Choose a username and strong password to create a new account.' : 'Enter your email and password to sign in.';
   authUsernameRow.classList.toggle('hidden', !isSignup);
   authConfirmPasswordRow.classList.toggle('hidden', !isSignup);
+  authAgreeRow.classList.toggle('hidden', !isSignup);
+  if (!isSignup && authAgreeCheckbox) authAgreeCheckbox.checked = false;
   authLoginTab.classList.toggle('active', !isSignup);
   authLoginTab.setAttribute('aria-selected', !isSignup ? 'true' : 'false');
   authSignupTab.classList.toggle('active', isSignup);
@@ -1033,7 +1386,7 @@ function handleSubmit() {
   const correctAnswer = getCorrectAnswer(targetColor);
   if (compareAnswer(guess, targetColor)) {
     sessionCorrect += 1;
-    score += currentDifficulty === "easy" ? 10 : 12;
+    score += getScoreForCorrectAnswer();
     streak += 1;
     setMessage("Nice! That answer is correct.", "success");
     playTone(880,0.12);
@@ -1120,7 +1473,6 @@ function applyDifficulty(mode) {
 }
 
 function setDifficulty(mode) {
-  difficultyByMode[currentMode] = mode;
   applyDifficulty(mode);
 }
 
@@ -1130,7 +1482,6 @@ function setGuessMode(mode) {
   modeHexButton.classList.toggle("active", mode === "hex");
   modeRgbButton.classList.toggle("active", mode === "rgb");
   modeHslButton.classList.toggle("active", mode === "hsl");
-  applyDifficulty(difficultyByMode[mode]);
   chooseTarget();
   updateStats();
   setMessage(`Guess the color using ${getModeLabel(currentMode).toLowerCase()}. High score: ${getCurrentHighScore()}.`);
@@ -1196,16 +1547,21 @@ modeHslButton.addEventListener("click", () => {
 
 // option buttons are attached dynamically when rendering options
 
-answerInput.addEventListener("keypress", (event) => {
-  if (event.key === "Enter") {
-    handleSubmit();
-  }
-});
 submitAnswerButton.addEventListener("click", handleSubmit);
+answerInput.addEventListener("keydown", (event) => {
+  event.stopPropagation();
+});
+answerInput.addEventListener("keypress", (event) => {
+  event.stopPropagation();
+});
+answerInput.addEventListener("keyup", (event) => {
+  event.stopPropagation();
+});
 
 window.addEventListener("load", async () => {
   await initializeAuth();
   loadSettings();
+  applyDifficulty(currentDifficulty);
   setGuessMode("hex");
   showPage('start');
   // Settings modal handlers
@@ -1243,6 +1599,13 @@ window.addEventListener("load", async () => {
   if (saveAccountButton) saveAccountButton.addEventListener('click', () => saveAccountSettings());
   if (accountChangePasswordButton) accountChangePasswordButton.addEventListener('click', () => handleChangePassword());
   if (deleteAccountButton) deleteAccountButton.addEventListener('click', () => handleDeleteAccount());
+  if (adminRefreshLeaderboardButton) adminRefreshLeaderboardButton.addEventListener('click', async () => {
+    if (!ensureAdmin()) return;
+    setAdminInfo('Refreshing leaderboard...');
+    await loadGlobalLeaderboard();
+    setAdminInfo('Leaderboard refreshed.');
+  });
+  if (adminViewStatsButton) adminViewStatsButton.addEventListener('click', () => showAdminReport());
   themeToggleButton.addEventListener('click', () => {
     applyTheme(currentTheme === 'light' ? 'dark' : 'light');
   });
@@ -1251,31 +1614,17 @@ window.addEventListener("load", async () => {
   leaderboardPageButton.addEventListener('click', () => { showPage('leaderboard'); setLeaderboardMode(globalLeaderboardMode); });
   infoButton.addEventListener('click', () => showPage('info'));
   startGameButton.addEventListener('click', () => { showPage('play'); resetGame(); });
+  if (termsLink) termsLink.addEventListener('click', (event) => { event.preventDefault(); showPage('terms'); });
+  if (privacyLink) privacyLink.addEventListener('click', (event) => { event.preventDefault(); showPage('privacy'); });
+  if (authTermsLink) authTermsLink.addEventListener('click', (event) => { event.preventDefault(); showPage('terms'); });
+  if (authPrivacyLink) authPrivacyLink.addEventListener('click', (event) => { event.preventDefault(); showPage('privacy'); });
+  if (termsBackButton) termsBackButton.addEventListener('click', () => showPage('start'));
+  if (privacyBackButton) privacyBackButton.addEventListener('click', () => showPage('start'));
   viewHelpButton.addEventListener('click', () => openModal(helpModal));
   backToHomeButton.addEventListener('click', () => showPage('start'));
   backToHomeButtonFromLeaderboard.addEventListener('click', () => showPage('start'));
-  leaderboardAllButton.addEventListener('click', () => setLeaderboardMode('all'));
   leaderboardNameButton.addEventListener('click', () => setLeaderboardMode('name'));
   leaderboardHexButton.addEventListener('click', () => setLeaderboardMode('hex'));
   leaderboardRgbButton.addEventListener('click', () => setLeaderboardMode('rgb'));
   leaderboardHslButton.addEventListener('click', () => setLeaderboardMode('hsl'));
-  // Keyboard shortcuts
-  document.addEventListener('keydown', (e) => {
-    if (activeModal) {
-      if (e.key === 'Escape') {
-        closeModal(activeModal);
-      } else {
-        trapModalFocus(e);
-      }
-      return;
-    }
-    if (e.key === 'Enter' && document.activeElement === answerInput) return; // handled by input
-    if (e.key === 'n' || e.key === 'N') setGuessMode('name');
-    if (e.key === 'h' || e.key === 'H') setGuessMode('hex');
-    if (e.key === 'r' || e.key === 'R') setGuessMode('rgb');
-    if (e.key === 'l' || e.key === 'L') setGuessMode('hsl');
-    if (e.key === 'e' || e.key === 'E') { setDifficulty('easy'); resetGame(); }
-    if (e.key === 'd' || e.key === 'D') { setDifficulty('hard'); resetGame(); }
-    if (e.code === 'Space') { e.preventDefault(); resetGame(); }
-  });
 });
