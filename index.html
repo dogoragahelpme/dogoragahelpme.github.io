@@ -1,395 +1,466 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ColorGuessa</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="container">
-    <nav class="top-nav">
-      <div class="logo">ColorGuessa</div>
-      <div class="nav-links">
-        <button class="nav-button" id="startPageButton">Home</button>
-        <button class="nav-button" id="playPageButton">Play</button>
-        <button class="nav-button" id="leaderboardPageButton">Leaderboard</button>
-        <button class="nav-button" id="infoButton">Info</button>
+
+<html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>ColorGuessa</title> <link rel="stylesheet" href="style.css"> </head> <body> <div class="container"> <nav class="top-nav"> <div class="logo">ColorGuessa</div> <div class="nav-links"> <button class="nav-button" id="startPageButton">Home</button> <button class="nav-button" id="playPageButton">Play</button> <button class="nav-button" id="leaderboardPageButton">Leaderboard</button> <button class="nav-button" id="infoButton">Info</button> </div> <button class="nav-button theme-toggle" id="themeToggleButton" aria-pressed="false" aria-label="Switch to light theme" title="Switch theme">☀</button> <a class="nav-button donate-button" href="https://paypal.me/colorguessa" target="_blank" rel="noopener noreferrer">Donate❤️</a> <button class="nav-button" id="authButton">Sign in</button> <button class="nav-button hidden" id="logoutButton">Logout</button> <button class="nav-button hidden" id="accountSettingsButton">Account</button> </nav>
+
+<section id="startPage" class="start-page card">
+  <div>
+    <h1>ColorGuessa</h1>
+    <p>Tap into your color intuition. Start with a quick guessing round, try expert-ranked formats, and switch between Color Name, HEX, RGB, and HSL modes.</p>
+    <div class="start-actions">
+      <button class="control-button" id="startGameButton">Start game</button>
+      <button class="control-button" id="viewHelpButton">How to play</button>
+    </div>
+  </div>
+  <div class="start-preview">
+    <div class="preview-swatch"></div>
+    <div class="preview-info">
+      <p>Score streaks, timer challenges, and theme support make every round exciting.</p>
+    </div>
+  </div>
+</section>
+
+<section id="gamePage" class="hidden">
+  <header>
+    <div>
+      <h1>ColorGuessa</h1>
+      <p>Challenge your color intuition with a fast-paced guessing game. Identify the color shown in the swatch before time runs out.</p>
+    </div>
+
+    <div class="status-bar">
+      <div class="card stat">
+        <span>Score</span>
+        <strong id="scoreValue">0</strong>
       </div>
-      <button class="nav-button theme-toggle" id="themeToggleButton" aria-pressed="false" aria-label="Switch to light theme" title="Switch theme">☀</button>
-      <a class="nav-button donate-button" href="https://paypal.me/colorguessa" target="_blank" rel="noopener noreferrer">Donate❤️</a>
-      <button class="nav-button" id="authButton">Sign in</button>
-      <button class="nav-button hidden" id="logoutButton">Logout</button>
-      <button class="nav-button hidden" id="accountSettingsButton">Account</button>
-    </nav>
-    <section id="startPage" class="start-page card">
-      <div>
-        <h1>ColorGuessa</h1>
-        <p>Tap into your color intuition. Start with a quick guessing round, try expert-ranked formats, and switch between Color Name, HEX, RGB, and HSL modes.</p>
-        <div class="start-actions">
-          <button class="control-button" id="startGameButton">Start game</button>
-          <button class="control-button" id="viewHelpButton">How to play</button>
+      <div class="card stat">
+        <span>Time Left</span>
+        <strong id="timerValue">60s</strong>
+      </div>
+      <div class="card stat">
+        <span>Streak</span>
+        <strong id="streakValue">0</strong>
+      </div>
+      <div class="card stat">
+        <span>High Score</span>
+        <strong id="highScoreValue">0</strong>
+      </div>
+    </div>
+  </header>
+
+  <main class="game-panel">
+    <section class="card color-card">
+      <div class="color-swatch" id="colorSwatch"></div>
+
+      <div class="color-info">
+        <div>
+          <p class="title" id="targetLabel">Enter the current color value</p>
+          <h2 class="target" id="targetName">Type your answer below</h2>
         </div>
-      </div>
-      <div class="start-preview">
-        <div class="preview-swatch"></div>
-        <div class="preview-info">
-          <p>Score streaks, timer challenges, and theme support make every round exciting.</p>
+
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+          <button class="control-button" id="newGameButton">New game</button>
+          <button class="control-button" id="settingsButton" aria-haspopup="dialog">Settings</button>
+          <button class="control-button" id="helpButton" aria-haspopup="dialog">Help</button>
         </div>
       </div>
     </section>
-    <section id="gamePage" class="hidden">
-    <header>
-      <div>
-        <h1>ColorGuessa</h1>
-        <p>Challenge your color intuition with a fast-paced guessing game. Identify the color shown in the swatch before time runs out.</p>
-      </div>
-      <div class="status-bar">
-        <div class="card stat">
-          <span>Score</span>
-          <strong id="scoreValue">0</strong>
-        </div>
-        <div class="card stat">
-          <span>Time Left</span>
-          <strong id="timerValue">60s</strong>
-        </div>
-        <div class="card stat">
-          <span>Streak</span>
-          <strong id="streakValue">0</strong>
-        </div>
-        <div class="card stat">
-          <span>High Score</span>
-          <strong id="highScoreValue">0</strong>
-        </div>
-      </div>
-    </header>
 
-    <main class="game-panel">
-      <section class="card color-card">
-        <div class="color-swatch" id="colorSwatch"></div>
-        <div class="color-info">
-          <div>
-            <p class="title" id="targetLabel">Enter the current color value</p>
-            <h2 class="target" id="targetName">Type your answer below</h2>
-          </div>
-          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-            <button class="control-button" id="newGameButton">New game</button>
-            <button class="control-button" id="settingsButton" aria-haspopup="dialog">Settings</button>
-            <button class="control-button" id="helpButton" aria-haspopup="dialog">Help</button>
-          </div>
+    <section class="card controls">
+      <div class="color-info">
+        <div>
+          <p class="title">Difficulty</p>
         </div>
-      </section>
 
-      <section class="card controls">
-        <div class="color-info">
-          <div>
-            <p class="title">Difficulty</p>
-          </div>
-          <div class="difficulty-buttons">
-            <button class="control-button diff-button" id="diffVeryEasyButton">Very Easy</button>
-            <button class="control-button diff-button" id="diffEasyButton">Easy</button>
-            <button class="control-button diff-button active" id="diffMediumButton">Medium</button>
-            <button class="control-button diff-button" id="diffHardButton">Hard</button>
-            <button class="control-button diff-button" id="diffExpertButton">Expert</button>
-          </div>
-        </div>
-        <div class="color-info">
-          <div>
-            <p class="title">Guess mode</p>
-          </div>
-          <div class="mode-buttons">
-            <button class="control-button mode-button active" id="modeNameButton">Name</button>
-            <button class="control-button mode-button" id="modeHexButton">HEX</button>
-            <button class="control-button mode-button" id="modeRgbButton">RGB</button>
-            <button class="control-button mode-button" id="modeHslButton">HSL</button>
-          </div>
-        </div>
-        <div class="answer-input">
-          <input type="text" id="answerInput" placeholder="Type your answer here" autocomplete="off" />
-          <button class="control-button" id="submitAnswerButton">Submit</button>
-        </div>
-        <div class="options hidden">
-          <button class="option-button">Option 1</button>
-          <button class="option-button">Option 2</button>
-          <button class="option-button">Option 3</button>
-          <button class="option-button">Option 4</button>
-        </div>
-        <p class="message" id="messageText">Type the answer that matches the swatch.</p>
-      </section>
-
-      <!-- Settings Modal -->
-      <div id="settingsModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" aria-hidden="true">
-        <div class="modal-content">
-          <h3 id="settingsTitle">Settings</h3>
-          <label for="timerSelect">Timer length (seconds)</label>
-          <select id="timerSelect">
-            <option value="30">30</option>
-            <option value="45">45</option>
-            <option value="60">60</option>
-            <option value="90">90</option>
-          </select>
-          <div style="margin-top:12px">
-            <label><input type="checkbox" id="soundToggle"> Enable sounds</label>
-          </div>
-          <div style="margin-top:14px;display:flex;gap:8px;justify-content:flex-end;">
-            <button class="control-button" id="saveSettingsButton">Save</button>
-            <button class="control-button" id="closeSettingsButton">Close</button>
-          </div>
+        <div class="difficulty-buttons">
+          <button class="control-button diff-button" id="diffVeryEasyButton">Very Easy</button>
+          <button class="control-button diff-button" id="diffEasyButton">Easy</button>
+          <button class="control-button diff-button active" id="diffMediumButton">Medium</button>
+          <button class="control-button diff-button" id="diffHardButton">Hard</button>
+          <button class="control-button diff-button" id="diffExpertButton">Expert</button>
         </div>
       </div>
 
-      <section class="footer card">
-        <h2>How to play</h2>
-        <p>Select the color name that matches the displayed swatch. Rounds can be set from 30 to 90 seconds, and correct answers build your score and streak. Only expert difficulty scores qualify for the global leaderboard.</p>
-      </section>
-    </main>
-  </section>
+      <div class="color-info">
+        <div>
+          <p class="title">Guess mode</p>
+        </div>
 
-  <div id="helpModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="helpTitle" aria-hidden="true">
-    <div class="modal-content">
-      <h3 id="helpTitle">How to play</h3>
-      <p>Very Easy/Easy: multiple-choice answers are presented. Medium/Hard/Expert: type the correct value.</p>
-      <p>HEX examples: <code>#FF0000</code> or <code>ff0000</code></p>
-      <p>RGB examples: <code>rgb(255,0,0)</code> or <code>255 0 0</code></p>
-      <p>HSL examples: <code>hsl(0,100%,50%)</code> or <code>0 100 50</code></p>
-      <p>Only expert-difficulty rounds are eligible for the global leaderboard.</p>
-      <div style="margin-top:12px;display:flex;justify-content:flex-end;"><button class="control-button" id="closeHelpButton">Close</button></div>
+        <div class="mode-buttons">
+          <button class="control-button mode-button active" id="modeNameButton">Name</button>
+          <button class="control-button mode-button" id="modeHexButton">HEX</button>
+          <button class="control-button mode-button" id="modeRgbButton">RGB</button>
+          <button class="control-button mode-button" id="modeHslButton">HSL</button>
+        </div>
+      </div>
+
+      <div class="answer-input">
+        <input type="text" id="answerInput" placeholder="Type your answer here" autocomplete="off" />
+        <button class="control-button" id="submitAnswerButton">Submit</button>
+      </div>
+
+      <div class="options hidden">
+        <button class="option-button">Option 1</button>
+        <button class="option-button">Option 2</button>
+        <button class="option-button">Option 3</button>
+        <button class="option-button">Option 4</button>
+      </div>
+
+      <p class="message" id="messageText">Type the answer that matches the swatch.</p>
+    </section>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="settingsTitle" aria-hidden="true">
+      <div class="modal-content">
+        <h3 id="settingsTitle">Settings</h3>
+
+        <label for="timerSelect">Timer length (seconds)</label>
+        <select id="timerSelect">
+          <option value="30">30</option>
+          <option value="45">45</option>
+          <option value="60">60</option>
+          <option value="90">90</option>
+        </select>
+
+        <div style="margin-top:12px">
+          <label><input type="checkbox" id="soundToggle"> Enable sounds</label>
+        </div>
+
+        <div style="margin-top:14px;display:flex;gap:8px;justify-content:flex-end;">
+          <button class="control-button" id="saveSettingsButton">Save</button>
+          <button class="control-button" id="closeSettingsButton">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="footer card">
+      <h2>How to play</h2>
+      <p>Select the color name that matches the displayed swatch. Rounds can be set from 30 to 90 seconds, and correct answers build your score and streak. Only expert difficulty scores qualify for the global leaderboard.</p>
+    </section>
+  </main>
+</section>
+
+<div id="helpModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="helpTitle" aria-hidden="true">
+  <div class="modal-content">
+    <h3 id="helpTitle">How to play</h3>
+    <p>Very Easy/Easy: multiple-choice answers are presented. Medium/Hard/Expert: type the correct value.</p>
+    <p>HEX examples: <code>#FF0000</code> or <code>ff0000</code></p>
+    <p>RGB examples: <code>rgb(255,0,0)</code> or <code>255 0 0</code></p>
+    <p>HSL examples: <code>hsl(0,100%,50%)</code> or <code>0 100 50</code></p>
+    <p>Only expert-difficulty rounds are eligible for the global leaderboard.</p>
+    <div style="margin-top:12px;display:flex;justify-content:flex-end;">
+      <button class="control-button" id="closeHelpButton">Close</button>
+    </div>
+  </div>
+</div>
+
+<section id="infoPage" class="hidden about-page card">
+  <h2>Why ColorGuessa works</h2>
+  <p>ColorGuessa is built to help you learn color values quickly and enjoyably, whether you are a designer, developer, or color enthusiast.</p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <h3>Multiple formats</h3>
+      <p>Learn and compare color names, HEX, RGB, and HSL values in one fast-paced game.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Easy + hard play</h3>
+      <p>Switch between friendly multiple choice and typed answers for a stronger learning curve.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Focused practice</h3>
+      <p>Use timed rounds to train visual recall and build confidence with color codes.</p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Smart UX</h3>
+      <p>Dark/light themes, sound controls, and high score tracking keep the game fun and customizable.</p>
     </div>
   </div>
 
-  <section id="infoPage" class="hidden about-page card">
-    <h2>Why ColorGuessa works</h2>
-    <p>ColorGuessa is built to help you learn color values quickly and enjoyably, whether you are a designer, developer, or color enthusiast.</p>
-    <div class="feature-grid">
-      <div class="feature-card">
-        <h3>Multiple formats</h3>
-        <p>Learn and compare color names, HEX, RGB, and HSL values in one fast-paced game.</p>
-      </div>
-      <div class="feature-card">
-        <h3>Easy + hard play</h3>
-        <p>Switch between friendly multiple choice and typed answers for a stronger learning curve.</p>
-      </div>
-      <div class="feature-card">
-        <h3>Focused practice</h3>
-        <p>Use timed rounds to train visual recall and build confidence with color codes.</p>
-      </div>
-      <div class="feature-card">
-        <h3>Smart UX</h3>
-        <p>Dark/light themes, sound controls, and high score tracking keep the game fun and customizable.</p>
-      </div>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <h3>How to play</h3>
+      <p>Choose a mode, then guess the color shown in the swatch by typing the correct value or picking the right answer.</p>
+
+      <ul>
+        <li>Easy mode: select from four choices.</li>
+        <li>Hard mode: type the exact answer.</li>
+        <li>HEX format: <code>#FF0000</code> or <code>ff0000</code>.</li>
+        <li>RGB format: <code>rgb(255,0,0)</code> or <code>255 0 0</code>.</li>
+        <li>HSL format: <code>hsl(0,100%,50%)</code> or <code>0 100 50</code>.</li>
+      </ul>
     </div>
-    <div class="feature-grid">
-      <div class="feature-card">
-        <h3>How to play</h3>
-        <p>Choose a mode, then guess the color shown in the swatch by typing the correct value or picking the right answer.</p>
-        <ul>
-          <li>Easy mode: select from four choices.</li>
-          <li>Hard mode: type the exact answer.</li>
-          <li>HEX format: <code>#FF0000</code> or <code>ff0000</code>.</li>
-          <li>RGB format: <code>rgb(255,0,0)</code> or <code>255 0 0</code>.</li>
-          <li>HSL format: <code>hsl(0,100%,50%)</code> or <code>0 100 50</code>.</li>
-        </ul>
-      </div>
-      <div class="feature-card">
-        <h3>Why this game is good for you</h3>
-        <ul>
-          <li>Improves color literacy across common design and development formats.</li>
-          <li>Builds faster color recognition through repeated practice.</li>
-          <li>Strengthens memory with streaks, score tracking, and time pressure.</li>
-          <li>Offers a gentle way to learn color formats while having fun.</li>
-        </ul>
-      </div>
+
+    <div class="feature-card">
+      <h3>Why this game is good for you</h3>
+
+      <ul>
+        <li>Improves color literacy across common design and development formats.</li>
+        <li>Builds faster color recognition through repeated practice.</li>
+        <li>Strengthens memory with streaks, score tracking, and time pressure.</li>
+        <li>Offers a gentle way to learn color formats while having fun.</li>
+      </ul>
     </div>
-    <button class="control-button" id="backToHomeButton">Back to home</button>
-  </section>
-  <section id="leaderboardPage" class="hidden about-page card leaderboard-page">
-    <h2>Expert Global Rankings</h2>
-    <p>Only expert-difficulty scores are shown here. Select a mode to filter expert scores, or view the top expert entries across all modes.</p>
-    <div class="leaderboard-controls">
-      <button class="control-button mode-button" id="leaderboardNameButton">Name</button>
-      <button class="control-button mode-button" id="leaderboardHexButton">HEX</button>
-      <button class="control-button mode-button" id="leaderboardRgbButton">RGB</button>
-      <button class="control-button mode-button" id="leaderboardHslButton">HSL</button>
-    </div>
-    <div class="leaderboard-status" id="leaderboardMessage">Loading global rankings…</div>
-    <div class="table-wrap">
-      <table class="leaderboard-table">
-        <colgroup>
-          <col style="width: 48px;">
-          <col>
-          <col style="width: 90px;">
-          <col style="width: 90px;">
-          <col style="width: 220px;">
-        </colgroup>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Player</th>
-            <th>Mode</th>
-            <th>Score</th>
-            <th>Updated</th>
-          </tr>
-        </thead>
-        <tbody id="leaderboardTableBody">
-          <tr><td colspan="5">No data yet.</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <button class="control-button" id="backToHomeButtonFromLeaderboard">Back to home</button>
-  </section>
-  <footer class="site-footer card">
-    <div class="footer-links">
-      <a href="#" class="footer-link" id="termsLink">Terms of Service</a>
-      <a href="#" class="footer-link" id="privacyLink">Privacy Policy</a>
-    </div>
-    <p>ColorGuessa is a free browser game for practicing color values. These links explain how your account and score data are handled when you sign in.</p>
-  </footer>
-  <section id="termsPage" class="hidden about-page card">
-    <h2>Terms of Service</h2>
-    <p>Welcome to ColorGuessa. By accessing or using this site, you agree to these Terms of Service. ColorGuessa is provided for entertainment and educational purposes only.</p>
-    <h3>Acceptance of terms</h3>
-    <p>These Terms govern your use of ColorGuessa. If you do not agree with any part of these Terms, do not use the site or create an account.</p>
-    <h3>Permitted use</h3>
-    <p>You may use ColorGuessa to practice color recognition, learn color formats, and participate in expert leaderboards. You agree not to use the site for any unlawful purpose or to disrupt or degrade the experience for other users.</p>
-    <h3>Account security</h3>
-    <p>If you create an account, you are responsible for maintaining the confidentiality of your login credentials. Do not share your password. The site stores passwords using hashing techniques on the server side, but you should still use strong, unique passwords.</p>
-    <h3>User content and conduct</h3>
-    <p>Any profile information, display name, or leaderboard username must not violate applicable laws or contain offensive content. You must not attempt to impersonate others, submit false information, or manipulate leaderboard data.</p>
-    <h3>Leaderboard and score data</h3>
-    <p>Expert leaderboard scores are collected to rank users and display public results. By sharing leaderboard data, you consent to the display of your chosen username, score, game mode, and update timestamp. If you disable leaderboard sharing in your account settings, your username may no longer appear publicly.</p>
-    <h3>Availability and modifications</h3>
-    <p>ColorGuessa may be modified, suspended, or discontinued at any time without notice. We do not guarantee that the site will be uninterrupted or error-free. The site is provided "as is" and without warranties of any kind.</p>
-    <h3>Limitation of liability</h3>
-    <p>To the fullest extent permitted by law, the owner of ColorGuessa is not liable for any direct, indirect, incidental, consequential, or punitive damages arising from your use of the site, including lost data or lost scores.</p>
-    <h3>Intellectual property</h3>
-    <p>All content, design, graphics, code, and text on ColorGuessa are owned by or licensed to the site owner. You may use the site for personal gaming and learning only; redistribution, reproduction, or commercial use without permission is prohibited.</p>
-    <h3>Changes to Terms</h3>
-    <p>We may update these Terms of Service at any time. If we make significant changes, we will note them on the site. Continued use after updates means you accept the revised Terms.</p>
-    <button class="control-button" id="termsBackButton">Back to home</button>
-  </section>
-  <section id="privacyPage" class="hidden about-page card">
-    <h2>Privacy Policy</h2>
-    <p>We respect your privacy. This Privacy Policy explains what information ColorGuessa collects, how it is used, and your choices.</p>
-    <h3>Information we collect</h3>
-    <p>We collect account information you provide voluntarily, including your email, username, and password. Passwords are stored as hashes. We also collect gameplay information such as high scores, selected game mode, and timestamps for leaderboard entries.</p>
-    <h3>How we use your information</h3>
-    <p>Your information is used to authenticate your account, save and display your personal high scores, manage leaderboard participation, and improve the site. We do not sell your personal information to third parties.</p>
-    <h3>Account and leaderboard settings</h3>
-    <p>If you choose to share scores publicly, your username and score data may appear on the expert leaderboard. If you disable public sharing in your account settings, your username should no longer be displayed.</p>
-    <h3>Cookies and browser storage</h3>
-    <p>ColorGuessa uses browser storage and session tokens for authentication and settings persistence. The site does not install analytics or advertising cookies by default. Only essential data is stored locally to keep you signed in and preserve gameplay preferences.</p>
-    <h3>Third-party services</h3>
-    <p>The site includes a donation link to PayPal. Payment processing for donations is handled entirely by PayPal and is subject to PayPal's own privacy and security policies. We do not receive or store your PayPal payment details.</p>
-    <h3>Security</h3>
-    <p>We take reasonable measures to protect your data, including hashing passwords and using secure communication where available. However, no online service is completely immune to security risks.</p>
-    <h3>Retention and deletion</h3>
-    <p>We retain your account and score data for as long as your account is active or as necessary to provide the service. If you delete your account, we will remove your personal data from active systems, although some information may remain in backups for a limited time.</p>
-    <h3>Children</h3>
-    <p>ColorGuessa is not intended for children under 13. If you are under 13, do not create an account or provide personal information. Parents or guardians should supervise their children's use of the site.</p>
-    <h3>Changes to this policy</h3>
-    <p>We may update this Privacy Policy from time to time. We encourage you to review this page periodically. Continued use of ColorGuessa after changes are posted indicates your agreement to the updated policy.</p>
-    <button class="control-button" id="privacyBackButton">Back to home</button>
-  </section>
+  </div>
+
+  <button class="control-button" id="backToHomeButton">Back to home</button>
+</section>
+
+<section id="leaderboardPage" class="hidden about-page card leaderboard-page">
+  <h2>Expert Global Rankings</h2>
+  <p>Only expert-difficulty scores are shown here. Select a mode to filter expert scores, or view the top expert entries across all modes.</p>
+
+  <div class="leaderboard-controls">
+    <button class="control-button mode-button" id="leaderboardNameButton">Name</button>
+    <button class="control-button mode-button" id="leaderboardHexButton">HEX</button>
+    <button class="control-button mode-button" id="leaderboardRgbButton">RGB</button>
+    <button class="control-button mode-button" id="leaderboardHslButton">HSL</button>
+  </div>
+
+  <div class="leaderboard-status" id="leaderboardMessage">Loading global rankings…</div>
+
+  <div class="table-wrap">
+    <table class="leaderboard-table">
+      <colgroup>
+        <col style="width: 48px;">
+        <col>
+        <col style="width: 90px;">
+        <col style="width: 90px;">
+        <col style="width: 220px;">
+      </colgroup>
+
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Player</th>
+          <th>Mode</th>
+          <th>Score</th>
+          <th>Updated</th>
+        </tr>
+      </thead>
+
+      <tbody id="leaderboardTableBody">
+        <tr><td colspan="5">No data yet.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button class="control-button" id="backToHomeButtonFromLeaderboard">Back to home</button>
+</section>
+
+<footer class="site-footer card">
+  <div class="footer-links">
+    <a href="#" class="footer-link" id="termsLink">Terms of Service</a>
+    <a href="#" class="footer-link" id="privacyLink">Privacy Policy</a>
+    <a href="https://hobbias.com/" class="footer-link" target="_blank" rel="noopener noreferrer">Hobbias</a>
+  </div>
+
+  <p>ColorGuessa is a free browser game for practicing color values. These links explain how your account and score data are handled when you sign in.</p>
+</footer>
+
+<section id="termsPage" class="hidden about-page card">
+  <h2>Terms of Service</h2>
+  <p>Welcome to ColorGuessa. By accessing or using this site, you agree to these Terms of Service. ColorGuessa is provided for entertainment and educational purposes only.</p>
+
+  <h3>Acceptance of terms</h3>
+  <p>These Terms govern your use of ColorGuessa. If you do not agree with any part of these Terms, do not use the site or create an account.</p>
+
+  <h3>Permitted use</h3>
+  <p>You may use ColorGuessa to practice color recognition, learn color formats, and participate in expert leaderboards. You agree not to use the site for any unlawful purpose or to disrupt or degrade the experience for other users.</p>
+
+  <h3>Account security</h3>
+  <p>If you create an account, you are responsible for maintaining the confidentiality of your login credentials. Do not share your password. The site stores passwords using hashing techniques on the server side, but you should still use strong, unique passwords.</p>
+
+  <h3>User content and conduct</h3>
+  <p>Any profile information, display name, or leaderboard username must not violate applicable laws or contain offensive content. You must not attempt to impersonate others, submit false information, or manipulate leaderboard data.</p>
+
+  <h3>Leaderboard and score data</h3>
+  <p>Expert leaderboard scores are collected to rank users and display public results. By sharing leaderboard data, you consent to the display of your chosen username, score, game mode, and update timestamp. If you disable leaderboard sharing in your account settings, your username may no longer appear publicly.</p>
+
+  <h3>Availability and modifications</h3>
+  <p>ColorGuessa may be modified, suspended, or discontinued at any time without notice. We do not guarantee that the site will be uninterrupted or error-free. The site is provided "as is" and without warranties of any kind.</p>
+
+  <h3>Limitation of liability</h3>
+  <p>To the fullest extent permitted by law, the owner of ColorGuessa is not liable for any direct, indirect, incidental, consequential, or punitive damages arising from your use of the site, including lost data or lost scores.</p>
+
+  <h3>Intellectual property</h3>
+  <p>All content, design, graphics, code, and text on ColorGuessa are owned by or licensed to the site owner. You may use the site for personal gaming and learning only; redistribution, reproduction, or commercial use without permission is prohibited.</p>
+
+  <h3>Changes to Terms</h3>
+  <p>We may update these Terms of Service at any time. If we make significant changes, we will note them on the site. Continued use after updates means you accept the revised Terms.</p>
+
+  <button class="control-button" id="termsBackButton">Back to home</button>
+</section>
+
+<section id="privacyPage" class="hidden about-page card">
+  <h2>Privacy Policy</h2>
+  <p>We respect your privacy. This Privacy Policy explains what information ColorGuessa collects, how it is used, and your choices.</p>
+
+  <h3>Information we collect</h3>
+  <p>We collect account information you provide voluntarily, including your email, username, and password. Passwords are stored as hashes. We also collect gameplay information such as high scores, selected game mode, and timestamps for leaderboard entries.</p>
+
+  <h3>How we use your information</h3>
+  <p>Your information is used to authenticate your account, save and display your personal high scores, manage leaderboard participation, and improve the site. We do not sell your personal information to third parties.</p>
+
+  <h3>Account and leaderboard settings</h3>
+  <p>If you choose to share scores publicly, your username and score data may appear on the expert leaderboard. If you disable public sharing in your account settings, your username should no longer be displayed.</p>
+
+  <h3>Cookies and browser storage</h3>
+  <p>ColorGuessa uses browser storage and session tokens for authentication and settings persistence. The site does not install analytics or advertising cookies by default. Only essential data is stored locally to keep you signed in and preserve gameplay preferences.</p>
+
+  <h3>Third-party services</h3>
+  <p>The site includes a donation link to PayPal. Payment processing for donations is handled entirely by PayPal and is subject to PayPal's own privacy and security policies. We do not receive or store your PayPal payment details.</p>
+
+  <h3>Security</h3>
+  <p>We take reasonable measures to protect your data, including hashing passwords and using secure communication where available. However, no online service is completely immune to security risks.</p>
+
+  <h3>Retention and deletion</h3>
+  <p>We retain your account and score data for as long as your account is active or as necessary to provide the service. If you delete your account, we will remove your personal data from active systems, although some information may remain in backups for a limited time.</p>
+
+  <h3>Children</h3>
+  <p>ColorGuessa is not intended for children under 13. If you are under 13, do not create an account or provide personal information. Parents or guardians should supervise their children's use of the site.</p>
+
+  <h3>Changes to this policy</h3>
+  <p>We may update this Privacy Policy from time to time. We encourage you to review this page periodically. Continued use of ColorGuessa after changes are posted indicates your agreement to the updated policy.</p>
+
+  <button class="control-button" id="privacyBackButton">Back to home</button>
+</section>
+
 </div>
-      <!-- Account Settings Modal -->
-      <div id="accountModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="accountTitle" aria-hidden="true">
-        <div class="modal-content">
-          <h3 id="accountTitle">Account Settings</h3>
-          <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
-            <div id="accountStats" style="background:#fafafa;padding:8px;border-radius:6px;">
-              <strong>Personal stats</strong>
-              <div id="accountStatsContent" style="margin-top:6px;font-size:0.95rem;color:#222;">Loading…</div>
-            </div>
-            <label>Username
-              <input id="accountUsername" type="text" placeholder="Username">
-            </label>
-            <label>Email
-              <input id="accountEmail" type="email" placeholder="Email" readonly>
-            </label>
-            <label><input id="accountLeaderboardPublic" type="checkbox"> Show my username on expert leaderboard</label>
-            <label>Theme
-              <select id="accountThemeSelect">
-                <option value="dark">Dark</option>
-                <option value="light">Light</option>
-              </select>
-            </label>
-            <div id="adminSection" class="hidden" style="border-top:1px solid #f0f0f0;padding-top:12px;margin-top:12px;background:#f9fafb;border-radius:8px;">
-              <strong>Admin tools</strong>
-              <p style="margin:6px 0 10px;font-size:0.95rem;color:#333;">Special admin controls for the site owner.</p>
-              <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                <button class="control-button" id="adminRefreshLeaderboardButton">Refresh leaderboard</button>
-                <button class="control-button" id="adminViewStatsButton">Show admin report</button>
-              </div>
-              <div id="adminInfo" style="margin-top:10px;font-size:0.94rem;color:#1f2937;"></div>
-            </div>
-            <fieldset style="border-top:1px solid #eee;padding-top:8px;margin-top:6px;">
-              <legend>Change password</legend>
-              <input id="accountCurrentPassword" type="password" placeholder="Current password">
-              <input id="accountNewPassword" type="password" placeholder="New password">
-              <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:6px;">
-                <button class="control-button" id="accountChangePasswordButton">Change password</button>
-              </div>
-            </fieldset>
-            <div style="margin-top:8px;display:flex;gap:8px;justify-content:space-between;align-items:center;">
-              <button class="control-button danger" id="deleteAccountButton">Delete account</button>
-              <div style="display:flex;gap:8px;">
-                <button class="control-button" id="saveAccountButton">Save</button>
-                <button class="control-button" id="closeAccountButton">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
+
+<!-- Account Settings Modal -->
+
+<div id="accountModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="accountTitle" aria-hidden="true"> <div class="modal-content"> <h3 id="accountTitle">Account Settings</h3>
+
+  <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;">
+    <div id="accountStats" style="background:#fafafa;padding:8px;border-radius:6px;">
+      <strong>Personal stats</strong>
+      <div id="accountStatsContent" style="margin-top:6px;font-size:0.95rem;color:#222;">Loading…</div>
+    </div>
+
+    <label>Username
+      <input id="accountUsername" type="text" placeholder="Username">
+    </label>
+
+    <label>Email
+      <input id="accountEmail" type="email" placeholder="Email" readonly>
+    </label>
+
+    <label>
+      <input id="accountLeaderboardPublic" type="checkbox">
+      Show my username on expert leaderboard
+    </label>
+
+    <label>Theme
+      <select id="accountThemeSelect">
+        <option value="dark">Dark</option>
+        <option value="light">Light</option>
+      </select>
+    </label>
+
+    <div id="adminSection" class="hidden" style="border-top:1px solid #f0f0f0;padding-top:12px;margin-top:12px;background:#f9fafb;border-radius:8px;">
+      <strong>Admin tools</strong>
+      <p style="margin:6px 0 10px;font-size:0.95rem;color:#333;">Special admin controls for the site owner.</p>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="control-button" id="adminRefreshLeaderboardButton">Refresh leaderboard</button>
+        <button class="control-button" id="adminViewStatsButton">Show admin report</button>
       </div>
 
-      <!-- Auth Modal -->
-      <div id="authModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="authTitle" aria-hidden="true">
-        <div class="modal-content">
-          <h3 id="authTitle">Sign in</h3>
-          <form id="authForm" class="auth-form" novalidate>
-            <div class="auth-tabs" role="tablist" aria-label="Authentication tabs">
-              <button type="button" class="tab active" id="loginTab" role="tab" aria-selected="true">Sign in</button>
-              <button type="button" class="tab" id="signupTab" role="tab" aria-selected="false">Sign up</button>
-            </div>
-            <p class="auth-help" id="authHelpText">Enter your email and password to continue.</p>
-            <div class="auth-field auth-username-row hidden" id="authUsernameRow">
-              <label for="authUsername">Username
-                <input id="authUsername" type="text" placeholder="Pick a username" autocomplete="username">
-              </label>
-            </div>
-            <div class="auth-field">
-              <label for="authEmail">Email
-                <input id="authEmail" type="email" placeholder="you@example.com" autocomplete="email" required>
-              </label>
-            </div>
-            <div class="auth-field auth-password-row">
-              <label for="authPassword">Password
-                <div class="password-input-row">
-                  <input id="authPassword" type="password" placeholder="Enter password" autocomplete="current-password" required>
-                  <button type="button" class="control-button small" id="authTogglePasswordButton">Show</button>
-                </div>
-              </label>
-            </div>
-            <div class="auth-field auth-confirm-password-row hidden" id="authConfirmPasswordRow">
-              <label for="authConfirmPassword">Confirm password
-                <input id="authConfirmPassword" type="password" placeholder="Repeat password" autocomplete="new-password">
-              </label>
-            </div>
-            <div class="auth-field auth-agree-row hidden" id="authAgreeRow">
-              <label for="authAgreeCheckbox">
-                <input id="authAgreeCheckbox" type="checkbox">
-                I have read and agree to the <a href="#" id="authTermsLink">Terms of Service</a> and <a href="#" id="authPrivacyLink">Privacy Policy</a>.
-              </label>
-            </div>
-            <div id="authMessage" class="message hidden" role="alert" aria-live="polite"></div>
-            <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end;">
-              <button class="control-button" type="submit" id="authSubmitButton">Sign in</button>
-              <button class="control-button" type="button" id="closeAuthButton">Close</button>
-            </div>
-            <p style="margin-top:10px; text-align:right;"><a href="#" id="authToggleLink">Create an account</a></p>
-          </form>
-        </div>
+      <div id="adminInfo" style="margin-top:10px;font-size:0.94rem;color:#1f2937;"></div>
+    </div>
+
+    <fieldset style="border-top:1px solid #eee;padding-top:8px;margin-top:6px;">
+      <legend>Change password</legend>
+
+      <input id="accountCurrentPassword" type="password" placeholder="Current password">
+      <input id="accountNewPassword" type="password" placeholder="New password">
+
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:6px;">
+        <button class="control-button" id="accountChangePasswordButton">Change password</button>
       </div>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="script.js"></script>
-</body>
-</html>
+    </fieldset>
+
+    <div style="margin-top:8px;display:flex;gap:8px;justify-content:space-between;align-items:center;">
+      <button class="control-button danger" id="deleteAccountButton">Delete account</button>
+
+      <div style="display:flex;gap:8px;">
+        <button class="control-button" id="saveAccountButton">Save</button>
+        <button class="control-button" id="closeAccountButton">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- Auth Modal -->
+
+<div id="authModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="authTitle" aria-hidden="true"> <div class="modal-content"> <h3 id="authTitle">Sign in</h3>
+
+  <form id="authForm" class="auth-form" novalidate>
+    <div class="auth-tabs" role="tablist" aria-label="Authentication tabs">
+      <button type="button" class="tab active" id="loginTab" role="tab" aria-selected="true">Sign in</button>
+      <button type="button" class="tab" id="signupTab" role="tab" aria-selected="false">Sign up</button>
+    </div>
+
+    <p class="auth-help" id="authHelpText">Enter your email and password to continue.</p>
+
+    <div class="auth-field auth-username-row hidden" id="authUsernameRow">
+      <label for="authUsername">Username
+        <input id="authUsername" type="text" placeholder="Pick a username" autocomplete="username">
+      </label>
+    </div>
+
+    <div class="auth-field">
+      <label for="authEmail">Email
+        <input id="authEmail" type="email" placeholder="you@example.com" autocomplete="email" required>
+      </label>
+    </div>
+
+    <div class="auth-field auth-password-row">
+      <label for="authPassword">Password
+        <div class="password-input-row">
+          <input id="authPassword" type="password" placeholder="Enter password" autocomplete="current-password" required>
+          <button type="button" class="control-button small" id="authTogglePasswordButton">Show</button>
+        </div>
+      </label>
+    </div>
+
+    <div class="auth-field auth-confirm-password-row hidden" id="authConfirmPasswordRow">
+      <label for="authConfirmPassword">Confirm password
+        <input id="authConfirmPassword" type="password" placeholder="Repeat password" autocomplete="new-password">
+      </label>
+    </div>
+
+    <div class="auth-field auth-agree-row hidden" id="authAgreeRow">
+      <label for="authAgreeCheckbox">
+        <input id="authAgreeCheckbox" type="checkbox">
+        I have read and agree to the
+        <a href="#" id="authTermsLink">Terms of Service</a>
+        and
+        <a href="#" id="authPrivacyLink">Privacy Policy</a>.
+      </label>
+    </div>
+
+    <div id="authMessage" class="message hidden" role="alert" aria-live="polite"></div>
+
+    <div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end;">
+      <button class="control-button" type="submit" id="authSubmitButton">Sign in</button>
+      <button class="control-button" type="button" id="closeAuthButton">Close</button>
+    </div>
+
+    <p style="margin-top:10px; text-align:right;">
+      <a href="#" id="authToggleLink">Create an account</a>
+    </p>
+  </form>
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="script.js"></script>
+
+</body> </html>
